@@ -74,7 +74,7 @@
 | C_GenerateKeyPair:     | + | -  | -    | Generates a public-key/private-key pair, creating new key objects.|
 | C_WrapKey:             | + | +  | -    | Wraps (i.e., encrypts) a key.|
 | C_UnwrapKey:           | + | +  | -    | Unwraps (decrypts) a wrapped key, creating a new key object.|
-| C_DeriveKey:           | + | -  | -    | Derives a key from a base key, creating a new key object.|
+| C_DeriveKey:           | + | +  | -    | Derives a key from a base key, creating a new key object.|
 | C_SeedRandom:          | + | +  | -    | Mixes additional seed material into the token's random number generator.|
 | C_GenerateRandom:      | + | +  | -    | Generates random data.|
 | C_GetFunctionStatus:   | + | -  | -    | Legacy function; it obtains an updated status of a function running in parallel with an application.|
