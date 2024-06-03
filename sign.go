@@ -39,6 +39,8 @@ import (
 	"fmt"
 )
 
+// Initializes a signature (private key encryption) operation, where the signature is (will be) an appendix to the data,
+// and plaintext cannot be recovered from the signature.
 func (o *Object) SignInit(mech *Mechanism) error {
 	var arena, cm = cMechanism(mech)
 	defer arena.Free()
@@ -47,12 +49,37 @@ func (o *Object) SignInit(mech *Mechanism) error {
 	}
 	return nil
 }
+
+// Signs (encrypts with private key) data in a single part, where the signature is (will be) an appendix to the data,
+// and plaintext cannot be recovered from the signature.
 func (o *Object) Sign(data []byte) ([]byte, error) {
 
 	cSig := make([]C.CK_BYTE, 128)
 	cSigLen := C.CK_ULONG(128)
 
 	if rv := C.sign(o.fl, o.h, cData(data), C.CK_ULONG(len(data)), &cSig[0], &cSigLen); rv != C.CKR_OK {
+		return nil, fmt.Errorf("sign: 0x%x : %s", rv, returnValues[rv])
+	}
+	return []byte(string(cSig[:])), nil
+}
+
+// Continues a multiple-part signature operation, where the signature is (will be) an appendix to the data,
+// and plaintext cannot be recovered from the signature.
+func (o *Object) SignUpdate(message []byte) error {
+
+	if rv := C.sign_udate(o.fl, o.h, cData(message), C.CK_ULONG(len(message))); rv != C.CKR_OK {
+		return fmt.Errorf("sign: 0x%x : %s", rv, returnValues[rv])
+	}
+	return nil
+}
+
+// Finishes a multiple-part signature operation, returning the signature.
+func (o *Object) SignFinal(data []byte) ([]byte, error) {
+
+	cSig := make([]C.CK_BYTE, 128)
+	cSigLen := C.CK_ULONG(128)
+
+	if rv := C.sign_final(o.fl, o.h, cData(data), C.CK_ULONG(len(data)), &cSig[0], &cSigLen); rv != C.CKR_OK {
 		return nil, fmt.Errorf("sign: 0x%x : %s", rv, returnValues[rv])
 	}
 	return []byte(string(cSig[:])), nil
