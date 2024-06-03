@@ -28,7 +28,10 @@ CK_RV verify_recover(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_BYT
 }
 */
 import "C"
-import "fmt"
+import (
+	"fmt"
+	"unsafe"
+)
 
 // Initializes a signature verification
 // operation, where the data is recovered from the signature.
@@ -39,4 +42,19 @@ func (o *Object) VerifyRecoverInit(m *Mechanism) error {
 		return fmt.Errorf("verify_recover_init: 0x%x : %s", rv, returnValues[rv])
 	}
 	return nil
+}
+
+// Verifies a signature in a single-part operation,
+// where the data is recovered from the signature.
+func (o *Object) VerifyRecover(signature []byte) ([]byte, error) {
+	var (
+		data    C.CK_BYTE_PTR
+		datalen C.CK_ULONG
+	)
+	if rv := C.verify_recover(o.fl, o.h, cData(signature), C.CK_ULONG(len(signature)), &data, &datalen); rv != C.CKR_OK {
+		return nil, fmt.Errorf("verify_recover: 0x%x : %s", rv, returnValues[rv])
+	}
+	r := C.GoBytes(unsafe.Pointer(data), C.int(datalen))
+	C.free(unsafe.Pointer(data))
+	return r, nil
 }

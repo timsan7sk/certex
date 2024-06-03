@@ -20,7 +20,7 @@ import (
 )
 
 // Путь до конфига
-var path = "/home/timsan/Sources/Golang/certex/rcsp.conf"
+var path = "/home/timsan/Sources/Golang/Certex/rcsp.conf"
 
 // Connect to the HSM
 func connect(p unsafe.Pointer) {

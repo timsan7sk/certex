@@ -21,16 +21,16 @@ CK_RV sign(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDat
 CK_RV sign_update(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_BYTE_PTR pMessage, CK_ULONG ulMessageLen) {
 	return (*fl->C_SignUpdate)(hSession, pMessage, ulMessageLen);
 }
-CK_RV sign_final(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_BYTE_PTR * pSignature, CK_ULONG_PTR pulSignatureLen) {
+CK_RV sign_final(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen) {
 	CK_RV rv = (*fl->C_SignFinal)(hSession, NULL, pulSignatureLen);
 	if (rv != CKR_OK) {
 		return rv;
 	}
-	*pSignature = calloc(*pulSignatureLen, sizeof(CK_BYTE));
-	if (*pSignature == NULL) {
+	pSignature = calloc(*pulSignatureLen, sizeof(CK_BYTE));
+	if (pSignature == NULL) {
 		return CKR_HOST_MEMORY;
 	}
-	rv = (*fl->C_SignFinal)(hSession, *pSignature, pulSignatureLen);
+	rv = (*fl->C_SignFinal)(hSession, pSignature, pulSignatureLen);
 	return rv;
 }
 */
@@ -67,7 +67,7 @@ func (o *Object) Sign(data []byte) ([]byte, error) {
 // and plaintext cannot be recovered from the signature.
 func (o *Object) SignUpdate(message []byte) error {
 
-	if rv := C.sign_udate(o.fl, o.h, cData(message), C.CK_ULONG(len(message))); rv != C.CKR_OK {
+	if rv := C.sign_update(o.fl, o.h, cData(message), C.CK_ULONG(len(message))); rv != C.CKR_OK {
 		return fmt.Errorf("sign: 0x%x : %s", rv, returnValues[rv])
 	}
 	return nil
@@ -79,7 +79,7 @@ func (o *Object) SignFinal(data []byte) ([]byte, error) {
 	cSig := make([]C.CK_BYTE, 128)
 	cSigLen := C.CK_ULONG(128)
 
-	if rv := C.sign_final(o.fl, o.h, cData(data), C.CK_ULONG(len(data)), &cSig[0], &cSigLen); rv != C.CKR_OK {
+	if rv := C.sign_final(o.fl, o.h, &cSig[0], &cSigLen); rv != C.CKR_OK {
 		return nil, fmt.Errorf("sign: 0x%x : %s", rv, returnValues[rv])
 	}
 	return []byte(string(cSig[:])), nil

@@ -150,6 +150,9 @@ type Object struct {
 	c  C.CK_OBJECT_CLASS
 }
 
+// ObjectHandle is a token-specific identifier for an object.
+type ObjectHandle uint
+
 // Returns the type of the object stored. For example, certificate, public
 // key, or private key.
 func (o Object) Class() Class {

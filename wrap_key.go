@@ -25,3 +25,22 @@ CK_RV wrap_key(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_MECHANISM
 }
 */
 import "C"
+import (
+	"fmt"
+	"unsafe"
+)
+
+func (o *Object) WrapKey(m *Mechanism, wrappingKey ObjectHandle) ([]byte, error) {
+	var (
+		wrappedKey    C.CK_BYTE_PTR
+		wrappedKeyLen C.CK_ULONG
+	)
+	arena, mech := cMechanism(m)
+	defer arena.Free()
+	if rv := C.wrap_key(o.fl, o.h, mech, C.CK_OBJECT_HANDLE(wrappingKey), o.o, &wrappedKey, &wrappedKeyLen); rv != C.CKR_OK {
+		return nil, fmt.Errorf("wrap_key: 0x%x : %s", rv, returnValues[rv])
+	}
+	r := C.GoBytes(unsafe.Pointer(wrappedKey), C.int(wrappedKeyLen))
+	C.free(unsafe.Pointer(wrappedKey))
+	return r, nil
+}
