@@ -65,15 +65,15 @@
 | C_VerifyUpdate:        | + | +  | -    | Continues a multiple-part verification operation, where the signature is an appendix to the data, and plaintext cannot be recovered from the signature.|
 | C_VerifyFinal:         | + | +  | -    | Finishes a multiple-part verification operation, checking the signature.|
 | C_VerifyRecoverInit:   | + | +  | -    | Initializes a signature verification operation, where the data is recovered from the signature.|
-| C_VerifyRecover:       | + | -  | -    | Verifies a signature in a single-part operation, where the data is recovered from the signature.|
+| C_VerifyRecover:       | + | +  | -    | Verifies a signature in a single-part operation, where the data is recovered from the signature.|
 | C_DigestEncryptUpdate: | + | -  | -    | Continues a multiple-part digesting and encryption operation.|
 | C_DecryptDigestUpdate: | + | -  | -    | Continues a multiple-part decryption and digesting operation.|
 | C_SignEncryptUpdate:   | + | -  | -    | Continues a multiple-part signing and encryption operation.|
 | C_DecryptVerifyUpdate: | + | -  | -    | Continues a multiple-part decryption and verify operation.|
 | C_GenerateKey:         | + | -  | -    | Generates a secret key, creating a new key object.|
 | C_GenerateKeyPair:     | + | -  | -    | Generates a public-key/private-key pair, creating new key objects.|
-| C_WrapKey:             | + | -  | -    | Wraps (i.e., encrypts) a key.|
-| C_UnwrapKey:           | + | -  | -    | Unwraps (decrypts) a wrapped key, creating a new key object.|
+| C_WrapKey:             | + | +  | -    | Wraps (i.e., encrypts) a key.|
+| C_UnwrapKey:           | + | +  | -    | Unwraps (decrypts) a wrapped key, creating a new key object.|
 | C_DeriveKey:           | + | -  | -    | Derives a key from a base key, creating a new key object.|
 | C_SeedRandom:          | + | +  | -    | Mixes additional seed material into the token's random number generator.|
 | C_GenerateRandom:      | + | +  | -    | Generates random data.|
