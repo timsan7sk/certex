@@ -39,20 +39,21 @@ import (
 	"fmt"
 )
 
-func (o *Object) Sign(data []byte, mech *Mechanism) ([]byte, error) {
+func (o *Object) SignInit(mech *Mechanism) error {
+	var arena, cm = cMechanism(mech)
+	defer arena.Free()
+	if rv := C.sign_init(o.fl, o.h, cm, o.o); rv != C.CKR_OK {
+		return fmt.Errorf("sign_init: 0x%x : %s", rv, returnValues[rv])
+	}
+	return nil
+}
+func (o *Object) Sign(data []byte) ([]byte, error) {
 
 	cSig := make([]C.CK_BYTE, 128)
 	cSigLen := C.CK_ULONG(128)
 
-	var arena, cm = cMechanism(mech)
-	defer arena.Free()
-
-	if rv := C.sign_init(o.fl, o.h, cm, o.o); rv != C.CKR_OK {
-		return nil, fmt.Errorf("sign_init: 0x%x : %s", rv, returnValues[rv])
-	}
 	if rv := C.sign(o.fl, o.h, cData(data), C.CK_ULONG(len(data)), &cSig[0], &cSigLen); rv != C.CKR_OK {
 		return nil, fmt.Errorf("sign: 0x%x : %s", rv, returnValues[rv])
 	}
-
 	return []byte(string(cSig[:])), nil
 }

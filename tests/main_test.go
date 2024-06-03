@@ -2,6 +2,7 @@ package tests
 
 import (
 	"certex"
+	"encoding/base64"
 	"fmt"
 	"os"
 	"testing"
@@ -39,27 +40,31 @@ func TestMain(m *testing.M) {
 	// tokenInfo, _ := slot.GetTokenInfo(0)
 	// fmt.Printf("tokenInfo: %+v\n", tokenInfo)
 	var fltr = certex.Filter{
-		Class: certex.ClassPublicKey,
+		Class: certex.ClassPrivateKey,
 		Label: "",
 	}
 	objSlice, _ := slot.FindObjects(fltr)
-	// mech := certex.Mechanism{
-	// 	Mechanism: certex.MechanismMap["CKM_CERTEX_GOSTR3410_2001"],
-	// 	Parameter: nil,
-	// }
+	mech := certex.Mechanism{
+		Mechanism: certex.MechanismMap["CKM_CERTEX_GOSTR3411_GOSTR3410_2015"],
+		Parameter: nil,
+	}
 	for _, o := range objSlice {
 		l, _ := o.Label()
 		fmt.Printf("l: %+v - c: %s\n", l, o.Class().String())
-		// if l == "NCA_GOST_TEST" {
-		// 	d, _ := base64.StdEncoding.DecodeString("vJ0tWWPe0ZyIwcNm+HlpozYKnz0XYommpwIuIeFnBMDafffimYsCoXDAnTpq0/ka/jf5Db1ArFcAZuTKtQFoyw==ASAsASASAAsasasdasdasdasfawefwafscasca")
-
-		// 	s, err := o.Encrypt(d, &mech)
-		// 	if err != nil {
-		// 		fmt.Printf("Encrypt: %+v\n", err)
-		// 	}
-		// 	fmt.Printf("s: %s\n", s)
-		// 	fmt.Printf("s: %s\n", base64.StdEncoding.EncodeToString(s))
-		// }
+		if l == "NCA_GOST_TEST" {
+			d, _ := base64.StdEncoding.DecodeString("vJ0tWWPe0ZyIwcNm+HlpozYKnz0XYommpwIuIeFnBMDafffimYsCoXDAnTpq0/ka/jf5Db1ArFcAZuTKtQFoyw==ASAsASASAAsasasdasdasdasfawefwafscasca")
+			if err := o.SignRecoverInit(&mech); err != nil {
+				fmt.Printf("%+v\n", err)
+			} else {
+				if s, e := o.SignRecover(d); e != nil {
+					fmt.Printf("%+v\n", e)
+				} else {
+					fmt.Printf("GOTCHA!!!\n")
+					fmt.Printf("s: %s\n", s)
+					fmt.Printf("s: %s\n", base64.StdEncoding.EncodeToString(s))
+				}
+			}
+		}
 	}
 
 	// m.Run()
