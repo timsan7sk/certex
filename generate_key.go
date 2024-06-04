@@ -16,3 +16,17 @@ CK_RV generate_key(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_MECHA
 }
 */
 import "C"
+import "fmt"
+
+// Generates a secret key, creating a new key object.
+func (o *Object) GenerateKey(m *Mechanism, temp []*Attribute) (ObjectHandle, error) {
+	var newKey C.CK_OBJECT_HANDLE
+	attrarena, t, tcount := cAttributeArray(temp)
+	defer attrarena.Free()
+	mecharena, mech := cMechanism(m)
+	defer mecharena.Free()
+	if rv := C.generate_key(o.fl, o.h, mech, t, tcount, C.CK_OBJECT_HANDLE_PTR(&newKey)); rv != C.CKR_OK {
+		return 0, fmt.Errorf("generate_key: 0x%x : %s", rv, returnValues[rv])
+	}
+	return ObjectHandle(newKey), nil
+}
