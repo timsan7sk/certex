@@ -25,7 +25,22 @@ CK_RV decrypt_digest_update(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession,
 }
 */
 import "C"
+import (
+	"fmt"
+	"unsafe"
+)
 
-func (o *Object) DecryptDigestUpdate() error {
-	return nil
+// Continues a multiple-part decryption and digesting operation.
+func (o *Object) DecryptDigestUpdate(encPart []byte) ([]byte, error) {
+	var (
+		part    C.CK_BYTE_PTR
+		partlen C.CK_ULONG
+	)
+	if rv := C.decrypt_digest_update(o.fl, o.h, cData(encPart), C.CK_ULONG(len(encPart)), &part, &partlen); rv != C.CKR_OK {
+		return nil, fmt.Errorf("decrypt_digest_update: 0x%x : %s", rv, returnValues[rv])
+
+	}
+	d := C.GoBytes(unsafe.Pointer(part), C.int(partlen))
+	C.free(unsafe.Pointer(part))
+	return d, nil
 }

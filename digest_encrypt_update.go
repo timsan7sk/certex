@@ -11,16 +11,16 @@ package certex
 #include "./headers/pkcs11t.h"
 #include "./headers/PKICertexHSM.h"
 
-CK_RV digest_encrypt_update(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, CK_BYTE_PTR pEncryptedPart, CK_ULONG_PTR pulEncryptedPartLen) {
+CK_RV digest_encrypt_update(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, CK_BYTE_PTR *pEncryptedPart, CK_ULONG_PTR pulEncryptedPartLen) {
 	CK_RV rv = (*fl->C_DigestEncryptUpdate)(hSession, pPart, ulPartLen, NULL, pulEncryptedPartLen);
 	if (rv != CKR_OK) {
 		return rv;
 	}
-	pEncryptedPart = calloc(*pulEncryptedPartLen, sizeof(CK_BYTE));
-	if (pEncryptedPart == NULL) {
+	*pEncryptedPart = calloc(*pulEncryptedPartLen, sizeof(CK_BYTE));
+	if (*pEncryptedPart == NULL) {
 		return CKR_HOST_MEMORY;
 	}
-	rv = (*fl->C_DigestEncryptUpdate)(hSession, pPart, ulPartLen, pEncryptedPart, pulEncryptedPartLen);
+	rv = (*fl->C_DigestEncryptUpdate)(hSession, pPart, ulPartLen, *pEncryptedPart, pulEncryptedPartLen);
 	return rv;
 }
 */
@@ -36,7 +36,7 @@ func (o *Object) DigestEncryptUpdate(part []byte) ([]byte, error) {
 		encPart    C.CK_BYTE_PTR
 		encPartLen C.CK_ULONG
 	)
-	if rv := C.digest_encrypt_update(o.fl, o.h, cData(part), C.CK_ULONG(len(part)), encPart, &encPartLen); rv != C.CKR_OK {
+	if rv := C.digest_encrypt_update(o.fl, o.h, cData(part), C.CK_ULONG(len(part)), &encPart, &encPartLen); rv != C.CKR_OK {
 		return nil, fmt.Errorf("digest_encrypt_update: 0x%x : %s", rv, returnValues[rv])
 	}
 	d := C.GoBytes(unsafe.Pointer(encPart), C.int(encPartLen))
