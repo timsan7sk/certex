@@ -66,7 +66,7 @@
 | C_VerifyFinal:         | + | +  | -    | Finishes a multiple-part verification operation, checking the signature.|
 | C_VerifyRecoverInit:   | + | +  | -    | Initializes a signature verification operation, where the data is recovered from the signature.|
 | C_VerifyRecover:       | + | +  | -    | Verifies a signature in a single-part operation, where the data is recovered from the signature.|
-| C_DigestEncryptUpdate: | + | -  | -    | Continues a multiple-part digesting and encryption operation.|
+| C_DigestEncryptUpdate: | + | +  | -    | Continues a multiple-part digesting and encryption operation.|
 | C_DecryptDigestUpdate: | + | -  | -    | Continues a multiple-part decryption and digesting operation.|
 | C_SignEncryptUpdate:   | + | -  | -    | Continues a multiple-part signing and encryption operation.|
 | C_DecryptVerifyUpdate: | + | -  | -    | Continues a multiple-part decryption and verify operation.|

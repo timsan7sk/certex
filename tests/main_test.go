@@ -50,7 +50,7 @@ func TestMain(m *testing.M) {
 	}
 	for _, o := range objSlice {
 		l, _ := o.Label()
-		fmt.Printf("l: %+v - c: %s\n", l, o.Class().String())
+		// fmt.Printf("l: %+v - c: %s\n", l, o.Class().String())
 		if l == "NCA_GOST_TEST" {
 			d, _ := base64.StdEncoding.DecodeString("vJ0tWWPe0ZyIwcNm+HlpozYKnz0XYommpwIuIeFnBMDafffimYsCoXDAnTpq0/ka/jf5Db1ArFcAZuTKtQFoyw==ASAsASASAAsasasdasdasdasfawefwafscasca")
 			if err := o.SignRecoverInit(&mech); err != nil {
