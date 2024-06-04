@@ -69,7 +69,7 @@
 | C_DigestEncryptUpdate: | + | +  | -    | Continues a multiple-part digesting and encryption operation.|
 | C_DecryptDigestUpdate: | + | +  | -    | Continues a multiple-part decryption and digesting operation.|
 | C_SignEncryptUpdate:   | + | +  | -    | Continues a multiple-part signing and encryption operation.|
-| C_DecryptVerifyUpdate: | + | -  | -    | Continues a multiple-part decryption and verify operation.|
+| C_DecryptVerifyUpdate: | + | +  | -    | Continues a multiple-part decryption and verify operation.|
 | C_GenerateKey:         | + | +  | -    | Generates a secret key, creating a new key object.|
 | C_GenerateKeyPair:     | + | +  | -    | Generates a public-key/private-key pair, creating new key objects.|
 | C_WrapKey:             | + | +  | -    | Wraps (i.e., encrypts) a key.|
