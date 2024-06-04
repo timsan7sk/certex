@@ -11,16 +11,16 @@ package certex
 #include "./headers/pkcs11t.h"
 #include "./headers/PKICertexHSM.h"
 
-CK_RV decrypt_digest_update(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedPart, CK_ULONG ulEncryptedPartLen, CK_BYTE_PTR *pPart, CK_ULONG_PTR pulPartLen) {
+CK_RV decrypt_digest_update(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedPart, CK_ULONG ulEncryptedPartLen, CK_BYTE_PTR pPart, CK_ULONG_PTR pulPartLen) {
 	CK_RV rv = (*fl->C_DecryptDigestUpdate)(hSession, pEncryptedPart, ulEncryptedPartLen, NULL, pulPartLen);
 	if (rv != CKR_OK) {
 		return rv;
 	}
-	*pPart = calloc(*pulPartLen, sizeof(CK_BYTE));
-	if (*pPart == NULL) {
+	pPart = calloc(*pulPartLen, sizeof(CK_BYTE));
+	if (pPart == NULL) {
 		return CKR_HOST_MEMORY;
 	}
-	rv = (*fl->C_DecryptDigestUpdate)(hSession, pEncryptedPart, ulEncryptedPartLen, *pPart, pulPartLen);
+	rv = (*fl->C_DecryptDigestUpdate)(hSession, pEncryptedPart, ulEncryptedPartLen, pPart, pulPartLen);
 	return rv;
 }
 */
@@ -36,7 +36,7 @@ func (o *Object) DecryptDigestUpdate(encPart []byte) ([]byte, error) {
 		part    C.CK_BYTE_PTR
 		partlen C.CK_ULONG
 	)
-	if rv := C.decrypt_digest_update(o.fl, o.h, cData(encPart), C.CK_ULONG(len(encPart)), &part, &partlen); rv != C.CKR_OK {
+	if rv := C.decrypt_digest_update(o.fl, o.h, cData(encPart), C.CK_ULONG(len(encPart)), part, &partlen); rv != C.CKR_OK {
 		return nil, fmt.Errorf("decrypt_digest_update: 0x%x : %s", rv, returnValues[rv])
 
 	}
