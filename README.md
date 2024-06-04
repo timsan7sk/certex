@@ -23,7 +23,7 @@
 | C_GetMechanismInfo:    | + | +  | +    | Obtains information about a particular mechanism possibly supported by a token.|
 | C_InitToken:           | + | +  | -    | Initializes a token.|
 | C_InitPIN:             | + | +  | -    | Initializes the normal user's pin.|
-| C_SetPIN:              | + | +  | -    | Modifies the pin of the user who is logged in.|
+| C_SetPIN:              | + | +  | +    | Modifies the pin of the user who is logged in.|
 | C_OpenSession:         | + | +  | +    | Opens a session between an application and a token.|
 | C_CloseSession:        | + | +  | +    | Closes a session between an application and a token.|
 | C_CloseAllSessions:    | + | +  | +    | Closes all sessions with a token.|

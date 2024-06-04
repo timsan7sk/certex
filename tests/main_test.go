@@ -27,7 +27,10 @@ func TestMain(m *testing.M) {
 	// fmt.Printf("slotList: %+v\n", slotList)
 
 	slot, _ := mod.Slot(uint(0), opts)
-
+	// err = slot.SetPIN("25032016", "00000000")
+	// if err != nil {
+	// 	fmt.Printf("%s\n", err)
+	// }
 	// for k, v := range certex.MechanismMap {
 	// 	fmt.Printf("key[%s] value[%x]\n", k, v)
 	// }
