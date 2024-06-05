@@ -175,7 +175,7 @@ type SlotEvent struct {
 	SlotID uint
 }
 
-type slotOptions struct {
+type SlotOptions struct {
 	AdminPIN string
 	PIN      string
 	Label    string

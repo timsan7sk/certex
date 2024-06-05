@@ -22,7 +22,7 @@ import (
 
 var obj Object
 
-func (s *Slot) CreateObject(attrs []C.CK_ATTRIBUTE, opts slotOptions) (*Object, error) {
+func (s *Slot) CreateObject(attrs []C.CK_ATTRIBUTE, opts SlotOptions) (*Object, error) {
 	if opts.Label != "" {
 		cs, free := ckCString(opts.Label)
 		defer free()

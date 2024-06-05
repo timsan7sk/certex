@@ -21,28 +21,30 @@ CK_RV init_token(CK_FUNCTION_LIST_PTR fl, CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPi
 
 */
 import "C"
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
-func (s *Slot) initToken(id uint32, opts slotOptions) error {
-	if opts.Label == "" {
-		return fmt.Errorf("no label provided")
-	}
-	if opts.PIN == "" {
-		return fmt.Errorf("no user pin provided")
-	}
-	if opts.AdminPIN == "" {
-		return fmt.Errorf("no admin pin provided")
+// Initializes a token.
+func (m *Cryptoki) InitToken(id uint32, opts SlotOptions) error {
+	v := reflect.ValueOf(opts)
+	t := v.Type()
+	for i := 0; i < v.NumField(); i++ {
+		if v.Field(i).String() == "" {
+			return fmt.Errorf("InitToken: %s not provided", t.Field(i).Name)
+		}
 	}
 
 	var cLabel [32]C.CK_UTF8CHAR
 	if !ckStringPadded(cLabel[:], opts.Label) {
-		return fmt.Errorf("initToken: label too long")
+		return fmt.Errorf("InitToken: label too long")
 	}
 	cPIN := ckString(opts.AdminPIN)
 	cPINLen := C.CK_ULONG(len(cPIN))
 
-	if rv := C.init_token(s.fl, C.CK_SLOT_ID(id), &cPIN[0], cPINLen, &cLabel[0]); rv != C.CKR_OK {
-		return fmt.Errorf("initToken: 0x%x : %s", rv, returnValues[rv])
+	if rv := C.init_token(m.fl, C.CK_SLOT_ID(id), &cPIN[0], cPINLen, &cLabel[0]); rv != C.CKR_OK {
+		return fmt.Errorf("init_token: 0x%x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
