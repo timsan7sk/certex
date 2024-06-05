@@ -2,18 +2,21 @@ package tests
 
 import (
 	"certex"
-	"fmt"
 	"testing"
 )
 
-func newTestOpen(t *testing.T) *certex.Cryptoki {
-	mod, err := certex.Open()
-	t.Logf("Module: %+v", mod)
+func NewTestOpen(t *testing.T) *certex.Cryptoki {
+	m, err := certex.Open()
 	if err != nil {
-		fmt.Printf("Open: %s\n", err)
+		t.Fatalf("Open: %s\n", err)
 	}
-	return mod
+	t.Cleanup(func() {
+		if err := m.Close(); err != nil {
+			t.Errorf("Close: %s", err)
+		}
+	})
+	return m
 }
 func TestOpen(t *testing.T) {
-	newTestOpen(t)
+	NewTestOpen(t)
 }

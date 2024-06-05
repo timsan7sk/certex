@@ -18,7 +18,7 @@ CK_RV open_session(CK_FUNCTION_LIST_PTR fl, CK_SLOT_ID slotID, CK_FLAGS flags, C
 import "C"
 import "fmt"
 
-func (m *Cryptoki) openSession(id uint, opts Options) (C.CK_SESSION_HANDLE, error) {
+func (m *Cryptoki) openSession(id uint32, opts Options) (C.CK_SESSION_HANDLE, error) {
 	var hSession C.CK_SESSION_HANDLE
 
 	if opts.AdminPIN != "" && opts.PIN != "" {

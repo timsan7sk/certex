@@ -34,8 +34,8 @@ func Open() (*Cryptoki, error) {
 
 	var p C.CK_FUNCTION_LIST_PTR
 
-	fmt.Printf("p: %v\n", p)
-	fmt.Printf("mod: %d\n", mod)
+	// fmt.Printf("p: %v\n", p)
+	// fmt.Printf("mod: %d\n", mod)
 
 	p, err = getFunctionList(mod, p)
 	if err != nil {

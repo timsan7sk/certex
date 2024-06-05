@@ -32,14 +32,16 @@ func (m *Cryptoki) InitToken(id uint32, opts SlotOptions) error {
 	t := v.Type()
 	for i := 0; i < v.NumField(); i++ {
 		if v.Field(i).String() == "" {
-			return fmt.Errorf("InitToken: %s not provided", t.Field(i).Name)
+			return fmt.Errorf("check options: %s not provided", t.Field(i).Name)
 		}
 	}
 
 	var cLabel [32]C.CK_UTF8CHAR
+
 	if !ckStringPadded(cLabel[:], opts.Label) {
 		return fmt.Errorf("InitToken: label too long")
 	}
+
 	cPIN := ckString(opts.AdminPIN)
 	cPINLen := C.CK_ULONG(len(cPIN))
 
