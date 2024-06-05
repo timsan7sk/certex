@@ -11,36 +11,36 @@
 
 | CK_FUNCTION_LIST:      | C | Go | Test | Comment|
 |:-----------------------|:-:|:--:|:----:|:-----------------------------------------------------------------------------------------------------------------------------------------|
-| connect                | + | +  | +    | Connectiong to the Certex HSM|
-| C_Initialize:          | + | +  | +    | Initializes the Cryptoki library.|
-| C_Finalize:            | + | +  | +    | Indicates that an application is done with the Cryptoki library.|
-| C_GetInfo:             | + | +  | +    | Returns general information about Cryptoki.|
-| C_GetFunctionList:     | + | +  | +    | Returns the function list.|
-| C_GetSlotList:         | + | +  | +    | Obtains a list of slots in the system.|
-| C_GetSlotInfo:         | + | +  | +    | Obtains information about a particular slot in the system.|
-| C_GetTokenInfo:        | + | +  | +    | Obtains information about a particular token in the system.|
-| C_GetMechanismList:    | + | +  | +    | Obtains a list of mechanism types supported by a token|
-| C_GetMechanismInfo:    | + | +  | +    | Obtains information about a particular mechanism possibly supported by a token.|
-| C_InitToken:           | + | +  | +    | Initializes a token.|
+| connect                | + | +  | -    | Connectiong to the Certex HSM|
+| C_Initialize:          | + | +  | -    | Initializes the Cryptoki library.|
+| C_Finalize:            | + | +  | -    | Indicates that an application is done with the Cryptoki library.|
+| C_GetInfo:             | + | +  | -    | Returns general information about Cryptoki.|
+| C_GetFunctionList:     | + | +  | -    | Returns the function list.|
+| C_GetSlotList:         | + | +  | -    | Obtains a list of slots in the system.|
+| C_GetSlotInfo:         | + | +  | -    | Obtains information about a particular slot in the system.|
+| C_GetTokenInfo:        | + | +  | -    | Obtains information about a particular token in the system.|
+| C_GetMechanismList:    | + | +  | -    | Obtains a list of mechanism types supported by a token|
+| C_GetMechanismInfo:    | + | +  | -    | Obtains information about a particular mechanism possibly supported by a token.|
+| C_InitToken:           | + | +  | -    | Initializes a token.|
 | C_InitPIN:             | + | +  | -    | Initializes the normal user's pin.|
-| C_SetPIN:              | + | +  | +    | Modifies the pin of the user who is logged in.|
-| C_OpenSession:         | + | +  | +    | Opens a session between an application and a token.|
-| C_CloseSession:        | + | +  | +    | Closes a session between an application and a token.|
-| C_CloseAllSessions:    | + | +  | +    | Closes all sessions with a token.|
-| C_GetSessionInfo:      | + | +  | +    | Obtains information about the session.|
+| C_SetPIN:              | + | +  | -    | Modifies the pin of the user who is logged in.|
+| C_OpenSession:         | + | +  | -    | Opens a session between an application and a token.|
+| C_CloseSession:        | + | +  | -    | Closes a session between an application and a token.|
+| C_CloseAllSessions:    | + | +  | -    | Closes all sessions with a token.|
+| C_GetSessionInfo:      | + | +  | -    | Obtains information about the session.|
 | C_GetOperationState:   | + | +  | -    | Obtains the state of the cryptographic operation in a session.|
 | C_SetOperationState:   | + | +  | -    | Restores the state of the cryptographic operation in a session.|
-| C_Login:               | + | +  | +    | Logs a user into a token.|
-| C_Logout:              | + | +  | +    | Logs a user out from a token.|
+| C_Login:               | + | +  | -    | Logs a user into a token.|
+| C_Logout:              | + | +  | -    | Logs a user out from a token.|
 | C_CreateObject:        | + | +  | -    | Creates a new object.|
 | C_CopyObject:          | + | +  | -    | Copies an object, creating a new object for the copy.|
 | C_DestroyObject:       | + | +  | -    | Destroys an object.|
 | C_GetObjectSize:       | + | +  | -    | Gets the size of an object in bytes.|
 | C_GetAttributeValue:   | + | +  | -    | Obtains the value of one or more object attributes.|
 | C_SetAttributeValue:   | + | +  | -    | Modifies the value of one or more object attributes.|
-| C_FindObjectsInit:     | + | +  | +    | Initializes a search for token and session objects that match a template.|
-| C_FindObjects:         | + | +  | +    | Continues a search for token and session objects that match a template, obtaining additional object handles.|
-| C_FindObjectsFinal:    | + | +  | +    | Finishes a search for token and session objects.|
+| C_FindObjectsInit:     | + | +  | -    | Initializes a search for token and session objects that match a template.|
+| C_FindObjects:         | + | +  | -    | Continues a search for token and session objects that match a template, obtaining additional object handles.|
+| C_FindObjectsFinal:    | + | +  | -    | Finishes a search for token and session objects.|
 | C_EncryptInit:         | + | +  | -    | Initializes an encryption operation.|
 | C_Encrypt:             | + | +  | -    | Encrypts single-part data.|
 | C_EncryptUpdate:       | + | +  | -    | Continues a multiple-part encryption operation.|
@@ -54,8 +54,8 @@
 | C_DigestUpdate:        | + | +  | -    | Continues a multiple-part message-digesting operation.|
 | C_DigestKey:           | + | +  | -    | Continues a multi-part message-digesting operation, by digesting the value of a secret key as part of the data already digested.|
 | C_DigestFinal:         | + | +  | -    | Finishes a multiple-part message-digesting operation.
-| C_SignInit:            | + | +  | +    | Initializes a signature (private key encryption) operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
-| C_Sign:                | + | +  | +    | Signs (encrypts with private key) data in a single part, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
+| C_SignInit:            | + | +  | -    | Initializes a signature (private key encryption) operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
+| C_Sign:                | + | +  | -    | Signs (encrypts with private key) data in a single part, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
 | C_SignUpdate:          | + | +  | -    | Continues a multiple-part signature operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
 | C_SignFinal:           | + | +  | -    | Finishes a multiple-part signature operation, returning the signature.|
 | C_SignRecoverInit:     | + | +  | -    | Initializes a signature operation, where the data can be recovered from the signature.|
