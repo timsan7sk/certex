@@ -4,14 +4,15 @@ import (
 	"testing"
 )
 
-const (
-	testAdminPIN = ""
-	testPIN      = "25032016"
-	testLabel    = "test_label"
-)
+// const (
+// 	testAdminPIN = ""
+// 	testPIN      = "25032016"
+// 	testLabel    = "test_label"
+// )
 
+// var libName = ""
 func TestMain(m *testing.M) {
-	// mod, err := certex.Open()
+	// mod, err := certex.Open("libcertex-rcsp_r.so.1")
 	// if err != nil {
 	// 	fmt.Println("New module open error", err)
 	// 	os.Exit(1)
@@ -25,17 +26,17 @@ func TestMain(m *testing.M) {
 	// 	PIN:       "25032016",
 	// 	ReadWrite: false,
 	// }
-	// sopt := certex.SlotOptions{
-	// 	AdminPIN: "25032016",
-	// 	PIN:      "25032016",
-	// 	Label:    "Test_Label",
-	// }
+	// // sopt := certex.SlotOptions{
+	// // 	AdminPIN: "25032016",
+	// // 	PIN:      "25032016",
+	// // 	Label:    "Test_Label",
+	// // }
 	// // slotList, _ := mod.GetSlotList()
 	// // fmt.Printf("slotList: %+v\n", slotList)
-	// if err := mod.InitToken(0, sopt); err != nil {
-	// 	fmt.Printf("%s\n", err)
-	// }
-	// slot, _ := mod.Slot(uint(0), opts)
+	// // if err := mod.InitToken(0, sopt); err != nil {
+	// // 	fmt.Printf("%s\n", err)
+	// // }
+	// slot, _ := mod.Slot(uint32(0), opts)
 	// // err = slot.SetPIN("25032016", "00000000")
 	// // if err != nil {
 	// // 	fmt.Printf("%s\n", err)
@@ -62,18 +63,25 @@ func TestMain(m *testing.M) {
 	// }
 	// for _, o := range objSlice {
 	// 	l, _ := o.Label()
-	// 	// fmt.Printf("l: %+v - c: %s\n", l, o.Class().String())
-	// 	if l == "NCA_GOST_TEST" {
-	// 		d, _ := base64.StdEncoding.DecodeString("vJ0tWWPe0ZyIwcNm+HlpozYKnz0XYommpwIuIeFnBMDafffimYsCoXDAnTpq0/ka/jf5Db1ArFcAZuTKtQFoyw==ASAsASASAAsasasdasdasdasfawefwafscasca")
-	// 		if err := o.SignRecoverInit(&mech); err != nil {
+	// 	fmt.Printf("l: %+v - c: %s\n", l, o.Class().String())
+	// 	if l == "NUC_TEST_GOST_2015" {
+	// 		// d, _ := base64.StdEncoding.DecodeString("0hu3jfUz5sAyvv1QzLEjvrM8GIUwpD6m20xTBKsevJ3ll4JHdaTx4vtLSXM0Vd7Avgj1j8zcuivK2JFHKAR1wA==")
+	// 		d, _ := base64.StdEncoding.DecodeString("RSPRqNtPvrjBwUMWgTUUqfkz2bMXrYB3akNQMwQdSRNUunhugNAnBzjZBg6HUh2TxjbPf7rbqTFrLU2bjC9An9NScz60qcDU7TQnDYUu1i0GPrVawCvHhfpziE2UJ3Bi")
+	// 		// d := []byte("RSPRqNtPvrjBwUMWgTUUqfkz2bMXrYB3akNQMwQdSRNUunhugNAnBzjZBg6HUh2TxjbPf7rbqTFrLU2bjC9An9NScz60qcDU7TQnDYUu1i0GPrVawCvHhfpziE2UJ3Bi")
+	// 		if err := o.SignInit(&mech); err != nil {
 	// 			fmt.Printf("%+v\n", err)
 	// 		} else {
-	// 			if s, e := o.SignRecover(d); e != nil {
+	// 			if e := o.SignUpdate(d); e != nil {
 	// 				fmt.Printf("%+v\n", e)
 	// 			} else {
-	// 				fmt.Printf("GOTCHA!!!\n")
-	// 				fmt.Printf("s: %s\n", s)
-	// 				fmt.Printf("s: %s\n", base64.StdEncoding.EncodeToString(s))
+	// 				s, e := o.SignFinal(d)
+	// 				if e != nil {
+	// 					fmt.Printf("%+v\n", e)
+	// 				} else {
+	// 					fmt.Printf("GOTCHA!!!\n")
+	// 					fmt.Printf("s: %s\n", s)
+	// 					fmt.Printf("s: %s\n", base64.StdEncoding.EncodeToString(s))
+	// 				}
 	// 			}
 	// 		}
 	// 	}

@@ -17,13 +17,11 @@ import (
 	"unsafe"
 )
 
-var libName = "libcertex-rcsp_r.so.1"
-
 // dlOpen tries to get a handle to a library (.so), attempting to access it
 // by the names specified in libs and returning the first that is successfully
 // opened. Callers are responsible for closing the handler. If no library can
 // be successfully opened, an error is returned.
-func dlOpen() (unsafe.Pointer, error) {
+func dlOpen(libName string) (unsafe.Pointer, error) {
 
 	cLibName := C.CString(libName)
 	defer C.free(unsafe.Pointer(cLibName))

@@ -6,7 +6,7 @@ import (
 )
 
 func NewTestOpen(t *testing.T) *certex.Cryptoki {
-	m, err := certex.Open()
+	m, err := certex.Open("libcertex-rcsp_r.so.1")
 	if err != nil {
 		t.Fatalf("Open: %s\n", err)
 	}

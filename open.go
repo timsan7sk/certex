@@ -23,9 +23,9 @@ import (
 	"os"
 )
 
-func Open() (*Cryptoki, error) {
+func Open(libName string) (*Cryptoki, error) {
 
-	mod, err := dlOpen()
+	mod, err := dlOpen(libName)
 	if err != nil {
 		fmt.Printf("dlOpen: %s\n", err)
 		os.Exit(1)
