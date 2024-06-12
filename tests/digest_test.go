@@ -3,7 +3,6 @@ package tests
 import (
 	"certex"
 	"encoding/base64"
-	"fmt"
 	"testing"
 )
 
@@ -13,7 +12,7 @@ func digestTest(t *testing.T) string {
 		Parameter: nil,
 	}
 	var s string
-	objs := findObjectsTest(t)
+	objs := findObjectsTest(t, fPrivKey)
 
 	for _, o := range objs {
 		l, _ := o.Label()
@@ -30,7 +29,6 @@ func digestTest(t *testing.T) string {
 			}
 		}
 	}
-	fmt.Println(s)
 	return s
 }
 
