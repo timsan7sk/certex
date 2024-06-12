@@ -167,6 +167,7 @@ type Slot struct {
 	fl C.CK_FUNCTION_LIST_PTR
 	h  C.CK_SESSION_HANDLE
 	rw bool
+	id uint32
 }
 
 // Holds the SlotID which for which an slot event (token insertion,

@@ -3,17 +3,17 @@ package tests
 import (
 	"certex"
 	"encoding/base64"
+	"fmt"
 	"testing"
 )
 
-var mech = certex.Mechanism{
-	Mechanism: certex.MechanismMap["CKM_CERTEX_GOSTR3411_2012_64"],
-	Parameter: nil,
-}
-
-func DigestTest(t *testing.T) string {
+func digestTest(t *testing.T) string {
+	var mech = certex.Mechanism{
+		Mechanism: certex.MechanismMap["CKM_CERTEX_GOSTR3411_2012_64"],
+		Parameter: nil,
+	}
 	var s string
-	objs := FindObjectsTest(t)
+	objs := findObjectsTest(t)
 
 	for _, o := range objs {
 		l, _ := o.Label()
@@ -30,9 +30,10 @@ func DigestTest(t *testing.T) string {
 			}
 		}
 	}
+	fmt.Println(s)
 	return s
 }
 
 func TestDigest(t *testing.T) {
-	DigestTest(t)
+	digestTest(t)
 }

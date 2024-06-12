@@ -37,13 +37,16 @@ func (m *Cryptoki) Close() error {
 }
 
 func (s *Slot) Close() error {
+	if err := s.logout(); err != nil {
+		return err
+	}
 	if rv := C.close_session(s.fl, s.h); rv != C.CKR_OK {
 		return fmt.Errorf("CloseSession: 0x%x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
-func (s *Slot) CloseAll(slotID uint32) error {
-	if rv := C.close_all_sessions(s.fl, C.CK_ULONG(slotID)); rv != C.CKR_OK {
+func (s *Slot) CloseAll() error {
+	if rv := C.close_all_sessions(s.fl, C.CK_ULONG(s.id)); rv != C.CKR_OK {
 		return fmt.Errorf("CloseAllSession: 0x%x : %s", rv, returnValues[rv])
 	}
 	return nil

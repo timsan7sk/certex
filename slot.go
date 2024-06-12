@@ -33,6 +33,7 @@ func (m *Cryptoki) Slot(id uint32, opts Options) (*Slot, error) {
 		fl: m.fl,
 		h:  hs,
 		rw: opts.ReadWrite,
+		id: id,
 	}
 	if err := s.login(opts.PIN, C.CKU_USER); err != nil {
 		s.Close()

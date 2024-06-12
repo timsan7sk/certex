@@ -23,6 +23,7 @@ import (
 	"os"
 )
 
+// Opens Cryptoki module
 func Open(libName string) (*Cryptoki, error) {
 
 	mod, err := dlOpen(libName)

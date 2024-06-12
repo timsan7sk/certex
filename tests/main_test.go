@@ -1,31 +1,48 @@
 package tests
 
 import (
+	"certex"
+	"fmt"
+	"os"
 	"testing"
 )
 
-// const (
-// 	testAdminPIN = ""
-// 	testPIN      = "25032016"
-// 	testLabel    = "test_label"
-// )
+const (
+	libName = "libcertex-rcsp_r.so.1"
 
-// var libName = ""
+	// testAdminPIN = ""
+	testPIN    = "25032016"
+	testSlotID = 0
+
+// testLabel    = "test_label"
+)
+
+var (
+	mod  *certex.Cryptoki
+	slot *certex.Slot
+)
+
 func TestMain(m *testing.M) {
-	// mod, err := certex.Open("libcertex-rcsp_r.so.1")
-	// if err != nil {
-	// 	fmt.Println("New module open error", err)
-	// 	os.Exit(1)
-	// }
+	var err error
+	mod, err = certex.Open(libName)
+	if err != nil {
+		fmt.Println("Open module error: ", err)
+		os.Exit(1)
+	}
 	// // ml, _ := mod.GetMechanismList(0)
 	// // for i, m := range ml {
 	// // 	mInfo, _ := mod.GetMechanismInfo(0, m)
 	// // 	fmt.Printf("%d - mInfo: %+v\n", i, mInfo)
 	// // }
-	// opts := certex.Options{
-	// 	PIN:       "25032016",
-	// 	ReadWrite: false,
-	// }
+	opts := certex.Options{
+		PIN:       testPIN,
+		ReadWrite: false,
+	}
+	slot, err = mod.Slot(testSlotID, opts)
+	if err != nil {
+		fmt.Println("Open slot error: ", err)
+		os.Exit(1)
+	}
 	// // sopt := certex.SlotOptions{
 	// // 	AdminPIN: "25032016",
 	// // 	PIN:      "25032016",
@@ -36,7 +53,6 @@ func TestMain(m *testing.M) {
 	// // if err := mod.InitToken(0, sopt); err != nil {
 	// // 	fmt.Printf("%s\n", err)
 	// // }
-	// slot, _ := mod.Slot(uint32(0), opts)
 	// // err = slot.SetPIN("25032016", "00000000")
 	// // if err != nil {
 	// // 	fmt.Printf("%s\n", err)
@@ -88,5 +104,6 @@ func TestMain(m *testing.M) {
 	// }
 
 	m.Run()
-	// defer mod.Close()
+	slot.CloseAll()
+	mod.Close()
 }

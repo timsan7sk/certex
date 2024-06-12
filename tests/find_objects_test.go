@@ -10,15 +10,13 @@ var fltr = certex.Filter{
 	Label: "",
 }
 
-func FindObjectsTest(t *testing.T) []certex.Object {
-	s := SlotTest(t)
-
-	o, err := s.FindObjects(fltr)
+func findObjectsTest(t *testing.T) []certex.Object {
+	o, err := slot.FindObjects(fltr)
 	if err != nil {
 		t.Fatal(err)
 	}
 	return o
 }
 func TestFindObjects(t *testing.T) {
-	FindObjectsTest(t)
+	findObjectsTest(t)
 }
