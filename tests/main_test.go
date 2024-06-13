@@ -68,42 +68,8 @@ func TestMain(m *testing.M) {
 	// // fmt.Printf("sInfo: %+v\n", sInfo)
 	// // tokenInfo, _ := slot.GetTokenInfo(0)
 	// // fmt.Printf("tokenInfo: %+v\n", tokenInfo)
-	// var fltr = certex.Filter{
-	// 	Class: certex.ClassPrivateKey,
-	// 	Label: "",
-	// }
-	// objSlice, _ := slot.FindObjects(fltr)
-	// mech := certex.Mechanism{
-	// 	Mechanism: certex.MechanismMap["CKM_CERTEX_GOSTR3411_GOSTR3410_2015"],
-	// 	Parameter: nil,
-	// }
-	// for _, o := range objSlice {
-	// 	l, _ := o.Label()
-	// 	fmt.Printf("l: %+v - c: %s\n", l, o.Class().String())
-	// 	if l == "NUC_TEST_GOST_2015" {
-	// 		// d, _ := base64.StdEncoding.DecodeString("0hu3jfUz5sAyvv1QzLEjvrM8GIUwpD6m20xTBKsevJ3ll4JHdaTx4vtLSXM0Vd7Avgj1j8zcuivK2JFHKAR1wA==")
-	// 		d, _ := base64.StdEncoding.DecodeString("RSPRqNtPvrjBwUMWgTUUqfkz2bMXrYB3akNQMwQdSRNUunhugNAnBzjZBg6HUh2TxjbPf7rbqTFrLU2bjC9An9NScz60qcDU7TQnDYUu1i0GPrVawCvHhfpziE2UJ3Bi")
-	// 		// d := []byte("RSPRqNtPvrjBwUMWgTUUqfkz2bMXrYB3akNQMwQdSRNUunhugNAnBzjZBg6HUh2TxjbPf7rbqTFrLU2bjC9An9NScz60qcDU7TQnDYUu1i0GPrVawCvHhfpziE2UJ3Bi")
-	// 		if err := o.SignInit(&mech); err != nil {
-	// 			fmt.Printf("%+v\n", err)
-	// 		} else {
-	// 			if e := o.SignUpdate(d); e != nil {
-	// 				fmt.Printf("%+v\n", e)
-	// 			} else {
-	// 				s, e := o.SignFinal(d)
-	// 				if e != nil {
-	// 					fmt.Printf("%+v\n", e)
-	// 				} else {
-	// 					fmt.Printf("GOTCHA!!!\n")
-	// 					fmt.Printf("s: %s\n", s)
-	// 					fmt.Printf("s: %s\n", base64.StdEncoding.EncodeToString(s))
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
 
 	m.Run()
-	slot.CloseAll()
+	slot.Close()
 	mod.Close()
 }

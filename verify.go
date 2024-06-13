@@ -44,7 +44,7 @@ func (o *Object) VerifyInit(m *Mechanism) error {
 // cannot be recovered from the signature.
 func (o *Object) Verify(data []byte, signature []byte) error {
 	if rv := C.verify(o.fl, o.h, cData(data), C.CK_ULONG(len(data)), cData(signature), C.CK_ULONG(len(signature))); rv != C.CKR_OK {
-		return fmt.Errorf("verify_init: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("verify: 0x%x : %s", rv, returnValues[rv])
 	}
 	return nil
 }

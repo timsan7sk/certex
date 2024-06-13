@@ -10,15 +10,13 @@ package certex
 #include "./headers/pkcs11def.h"
 #include "./headers/pkcs11t.h"
 #include "./headers/PKICertexHSM.h"
-
-
 */
 import "C"
 
 const CERTEX_DEF_BASE = uint(0x8E000000)
 
-/* Mechanisms */
-var MechanismMap = map[string]uint{
+/* Available Certext Mechanisms */
+var Mechanisms = map[string]uint{
 	/* GOST 28147.89 */
 	"CKM_CERTEX_GOST_28147_89_KEY_GEN": 0x00000000 + CERTEX_DEF_BASE,
 	"CKM_CERTEX_GOST_28147_89_ECB":     0x00000001 + CERTEX_DEF_BASE,

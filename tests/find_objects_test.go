@@ -10,11 +10,11 @@ var fPrivKey = certex.Filter{
 	Label: "",
 }
 
-//	var fPubKey = certex.Filter{
-//		Class: certex.ClassPublicKey,
-//		Label: "",
-//	}
-//
+var fPubKey = certex.Filter{
+	Class: certex.ClassPublicKey,
+	Label: "",
+}
+
 //	var fSecKey = certex.Filter{
 //		Class: certex.ClassSecretKey,
 //		Label: "",

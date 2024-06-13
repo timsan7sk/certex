@@ -6,19 +6,19 @@ import (
 	"testing"
 )
 
-func signTest(t *testing.T) string {
-	var mech = certex.Mechanism{
-		Mechanism: certex.MechanismMap["CKM_CERTEX_GOSTR3410_2015"],
-		Parameter: nil,
-	}
+var sigMech = certex.Mechanism{
+	Mechanism: certex.Mechanisms["CKM_CERTEX_GOSTR3410_2015"],
+	Parameter: nil,
+}
+
+func signTest(t *testing.T, d string) string {
 	var s string
-	d := digestTest(t)
 	objs := findObjectsTest(t, fPrivKey)
 	for _, o := range objs {
 		l, _ := o.Label()
 		if l == "NUC_TEST_GOST_2015" {
 			d, _ := base64.StdEncoding.DecodeString(d)
-			if err := o.SignInit(&mech); err != nil {
+			if err := o.SignInit(&sigMech); err != nil {
 				t.Fatal(err)
 			} else {
 				if d, err := o.Sign(d); err != nil {
@@ -33,5 +33,6 @@ func signTest(t *testing.T) string {
 }
 
 func TestSign(t *testing.T) {
-	signTest(t)
+	d := digestTest(t)
+	signTest(t, d)
 }
