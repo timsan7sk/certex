@@ -60,8 +60,8 @@
 | C_SignFinal:           | + | +  | -    | Finishes a multiple-part signature operation, returning the signature.|
 | C_SignRecoverInit:     | + | +  | -    | Initializes a signature operation, where the data can be recovered from the signature.|
 | C_SignRecover:         | + | +  | -    | Signs data in a single operation, where the data can be recovered from the signature.|
-| C_VerifyInit:          | + | +  | -    | Initializes a verification operation, where the signature is an appendix to the data, and plaintext cannot be recovered from the signature (e.g. DSA).|
-| C_Verify:              | + | +  | -    | Verifies a signature in a single-part operation, where the signature is an appendix to the data, and plaintext cannot be recovered from the signature.|
+| C_VerifyInit:          | + | +  | +    | Initializes a verification operation, where the signature is an appendix to the data, and plaintext cannot be recovered from the signature (e.g. DSA).|
+| C_Verify:              | + | +  | +    | Verifies a signature in a single-part operation, where the signature is an appendix to the data, and plaintext cannot be recovered from the signature.|
 | C_VerifyUpdate:        | + | +  | -    | Continues a multiple-part verification operation, where the signature is an appendix to the data, and plaintext cannot be recovered from the signature.|
 | C_VerifyFinal:         | + | +  | -    | Finishes a multiple-part verification operation, checking the signature.|
 | C_VerifyRecoverInit:   | + | +  | -    | Initializes a signature verification operation, where the data is recovered from the signature.|
