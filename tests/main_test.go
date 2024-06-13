@@ -29,11 +29,6 @@ func TestMain(m *testing.M) {
 		fmt.Println("Open module error: ", err)
 		os.Exit(1)
 	}
-	// // ml, _ := mod.GetMechanismList(0)
-	// // for i, m := range ml {
-	// // 	mInfo, _ := mod.GetMechanismInfo(0, m)
-	// // 	fmt.Printf("%d - mInfo: %+v\n", i, mInfo)
-	// // }
 	opts := certex.Options{
 		PIN:       testPIN,
 		ReadWrite: false,

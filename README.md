@@ -19,8 +19,8 @@
 | C_GetSlotList:         | + | +  | -    | Obtains a list of slots in the system.|
 | C_GetSlotInfo:         | + | +  | -    | Obtains information about a particular slot in the system.|
 | C_GetTokenInfo:        | + | +  | -    | Obtains information about a particular token in the system.|
-| C_GetMechanismList:    | + | +  | -    | Obtains a list of mechanism types supported by a token|
-| C_GetMechanismInfo:    | + | +  | -    | Obtains information about a particular mechanism possibly supported by a token.|
+| C_GetMechanismList:    | + | +  | +    | Obtains a list of mechanism types supported by a token|
+| C_GetMechanismInfo:    | + | +  | +    | Obtains information about a particular mechanism possibly supported by a token.|
 | C_InitToken:           | + | +  | -    | Initializes a token.|
 | C_InitPIN:             | + | +  | -    | Initializes the normal user's pin.|
 | C_SetPIN:              | + | +  | -    | Modifies the pin of the user who is logged in.|
@@ -31,7 +31,7 @@
 | C_GetOperationState:   | + | +  | -    | Obtains the state of the cryptographic operation in a session.|
 | C_SetOperationState:   | + | +  | -    | Restores the state of the cryptographic operation in a session.|
 | C_Login:               | + | +  | +    | Logs a user into a token.|
-| C_Logout:              | + | +  | -    | Logs a user out from a token.|
+| C_Logout:              | + | +  | +    | Logs a user out from a token.|
 | C_CreateObject:        | + | +  | -    | Creates a new object.|
 | C_CopyObject:          | + | +  | -    | Copies an object, creating a new object for the copy.|
 | C_DestroyObject:       | + | +  | -    | Destroys an object.|
