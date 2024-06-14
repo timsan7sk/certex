@@ -18,6 +18,7 @@ CK_RV get_object_size(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_OB
 import "C"
 import "fmt"
 
+// Gets the size of an object in bytes.
 func (o *Object) GetObjectSize() (uint, error) {
 	var size C.CK_ULONG
 	if rv := C.get_object_size(o.fl, o.h, o.o, &size); rv != C.CKR_OK {
