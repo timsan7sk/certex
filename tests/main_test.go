@@ -31,7 +31,7 @@ func TestMain(m *testing.M) {
 	}
 	opts := certex.Options{
 		PIN:       testPIN,
-		ReadWrite: false,
+		ReadWrite: true,
 	}
 	slot, err = mod.Slot(testSlotID, opts)
 	if err != nil {

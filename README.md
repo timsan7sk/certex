@@ -13,7 +13,7 @@
 |:-----------------------|:-:|:--:|:----:|:-----------------------------------------------------------------------------------------------------------------------------------------|
 | connect                | + | +  | +    | Connectiong to the Certex HSM|
 | C_Initialize:          | + | +  | +    | Initializes the Cryptoki library.|
-| C_Finalize:            | + | +  | -    | Indicates that an application is done with the Cryptoki library.|
+| C_Finalize:            | + | +  | +    | Indicates that an application is done with the Cryptoki library.|
 | C_GetInfo:             | + | +  | +    | Returns general information about Cryptoki.|
 | C_GetFunctionList:     | + | +  | +    | Returns the function list.|
 | C_GetSlotList:         | + | +  | -    | Obtains a list of slots in the system.|
@@ -23,7 +23,7 @@
 | C_GetMechanismInfo:    | + | +  | +    | Obtains information about a particular mechanism possibly supported by a token.|
 | C_InitToken:           | + | +  | -    | Initializes a token.|
 | C_InitPIN:             | + | +  | -    | Initializes the normal user's pin.|
-| C_SetPIN:              | + | +  | -    | Modifies the pin of the user who is logged in.|
+| C_SetPIN:              | + | +  | +    | Modifies the pin of the user who is logged in.|
 | C_OpenSession:         | + | +  | -    | Opens a session between an application and a token.|
 | C_CloseSession:        | + | +  | -    | Closes a session between an application and a token.|
 | C_CloseAllSessions:    | + | +  | -    | Closes all sessions with a token.|
@@ -54,8 +54,8 @@
 | C_DigestUpdate:        | + | +  | -    | Continues a multiple-part message-digesting operation.|
 | C_DigestKey:           | + | +  | -    | Continues a multi-part message-digesting operation, by digesting the value of a secret key as part of the data already digested.|
 | C_DigestFinal:         | + | +  | -    | Finishes a multiple-part message-digesting operation.
-| C_SignInit:            | + | +  | -    | Initializes a signature (private key encryption) operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
-| C_Sign:                | + | +  | -    | Signs (encrypts with private key) data in a single part, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
+| C_SignInit:            | + | +  | +    | Initializes a signature (private key encryption) operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
+| C_Sign:                | + | +  | +    | Signs (encrypts with private key) data in a single part, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
 | C_SignUpdate:          | + | +  | -    | Continues a multiple-part signature operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
 | C_SignFinal:           | + | +  | -    | Finishes a multiple-part signature operation, returning the signature.|
 | C_SignRecoverInit:     | + | +  | -    | Initializes a signature operation, where the data can be recovered from the signature.|
