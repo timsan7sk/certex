@@ -18,9 +18,9 @@ CK_RV get_token_info(CK_FUNCTION_LIST_PTR fl, CK_SLOT_ID slotID, CK_TOKEN_INFO_P
 import "C"
 import "fmt"
 
-func (s *Slot) GetTokenInfo(id uint32) (C.CK_TOKEN_INFO, error) {
+func (s *Slot) getTokenInfo() (C.CK_TOKEN_INFO, error) {
 	var cTokenInfo C.CK_TOKEN_INFO
-	slotID := C.CK_SLOT_ID(id)
+	slotID := C.CK_SLOT_ID(s.id)
 	if rv := C.get_token_info(s.fl, slotID, &cTokenInfo); rv != C.CKR_OK {
 		return C.CK_TOKEN_INFO{}, fmt.Errorf("GetTokenInfo: 0x%x : %s", rv, returnValues[rv])
 	}

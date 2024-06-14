@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestMechanisms(t *testing.T) {
+func TestMechanism(t *testing.T) {
 	if ml, err := mod.GetMechanismList(testSlotID); err != nil {
 		t.Fatal(err)
 	} else {

@@ -31,7 +31,7 @@ import (
 	"unsafe"
 )
 
-// GetOperationState obtains the state of the cryptographic operation in a session.
+// Obtains the state of the cryptographic operation in a session.
 func (s *Slot) GetOperationState() ([]byte, error) {
 	var (
 		pOperationState     C.CK_BYTE_PTR

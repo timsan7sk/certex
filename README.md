@@ -16,18 +16,18 @@
 | C_Finalize:            | + | +  | +    | Indicates that an application is done with the Cryptoki library.|
 | C_GetInfo:             | + | +  | +    | Returns general information about Cryptoki.|
 | C_GetFunctionList:     | + | +  | +    | Returns the function list.|
-| C_GetSlotList:         | + | +  | -    | Obtains a list of slots in the system.|
-| C_GetSlotInfo:         | + | +  | -    | Obtains information about a particular slot in the system.|
-| C_GetTokenInfo:        | + | +  | -    | Obtains information about a particular token in the system.|
+| C_GetSlotList:         | + | +  | +    | Obtains a list of slots in the system.|
+| C_GetSlotInfo:         | + | +  | +    | Obtains information about a particular slot in the system.|
+| C_GetTokenInfo:        | + | +  | +    | Obtains information about a particular token in the system.|
 | C_GetMechanismList:    | + | +  | +    | Obtains a list of mechanism types supported by a token|
 | C_GetMechanismInfo:    | + | +  | +    | Obtains information about a particular mechanism possibly supported by a token.|
 | C_InitToken:           | + | +  | -    | Initializes a token.|
 | C_InitPIN:             | + | +  | -    | Initializes the normal user's pin.|
 | C_SetPIN:              | + | +  | +    | Modifies the pin of the user who is logged in.|
-| C_OpenSession:         | + | +  | -    | Opens a session between an application and a token.|
-| C_CloseSession:        | + | +  | -    | Closes a session between an application and a token.|
-| C_CloseAllSessions:    | + | +  | -    | Closes all sessions with a token.|
-| C_GetSessionInfo:      | + | +  | -    | Obtains information about the session.|
+| C_OpenSession:         | + | +  | +    | Opens a session between an application and a token.|
+| C_CloseSession:        | + | +  | +    | Closes a session between an application and a token.|
+| C_CloseAllSessions:    | + | +  | +    | Closes all sessions with a token.|
+| C_GetSessionInfo:      | + | +  | +    | Obtains information about the session.|
 | C_GetOperationState:   | + | +  | -    | Obtains the state of the cryptographic operation in a session.|
 | C_SetOperationState:   | + | +  | -    | Restores the state of the cryptographic operation in a session.|
 | C_Login:               | + | +  | +    | Logs a user into a token.|

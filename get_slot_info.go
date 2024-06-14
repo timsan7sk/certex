@@ -18,10 +18,10 @@ CK_RV get_slot_info(CK_FUNCTION_LIST_PTR fl, CK_SLOT_ID slotID, CK_SLOT_INFO_PTR
 import "C"
 import "fmt"
 
-func (s *Slot) GetSlotInfo(id uint32) (*SlotInfo, error) {
+func (s *Slot) GetSlotInfo() (*SlotInfo, error) {
 	var cSlotInfo C.CK_SLOT_INFO
 
-	slotID := C.CK_SLOT_ID(id)
+	slotID := C.CK_SLOT_ID(s.id)
 
 	if rv := C.get_slot_info(s.fl, slotID, &cSlotInfo); rv != C.CKR_OK {
 		return nil, fmt.Errorf("get_slot_info: 0x%x : %s", rv, returnValues[rv])
@@ -33,7 +33,7 @@ func (s *Slot) GetSlotInfo(id uint32) (*SlotInfo, error) {
 	if (cSlotInfo.flags & C.CKF_TOKEN_PRESENT) == 0 {
 		return &info, nil
 	}
-	cTokenInfo, err := s.GetTokenInfo(uint32(slotID))
+	cTokenInfo, err := s.getTokenInfo()
 	if err != nil {
 		return &info, err
 	}

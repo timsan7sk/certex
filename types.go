@@ -159,6 +159,14 @@ func (o Object) Class() Class {
 	return Class(int(o.c))
 }
 
+// SessionInfo provides information about a session.
+type SessionInfo struct {
+	SlotID      uint
+	State       uint
+	Flags       uint
+	DeviceError uint
+}
+
 // Represents a session to a slot.
 //
 // A session holds a listable set of objects, such as certificates and
@@ -184,10 +192,9 @@ type SlotOptions struct {
 
 // Holds information about the slot and underlying token.
 type SlotInfo struct {
-	Label  string
-	Model  string
-	Serial string
-
+	Label       string
+	Model       string
+	Serial      string
 	Description string
 }
 

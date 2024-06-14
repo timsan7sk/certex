@@ -48,21 +48,6 @@ func TestMain(m *testing.M) {
 	// // if err := mod.InitToken(0, sopt); err != nil {
 	// // 	fmt.Printf("%s\n", err)
 	// // }
-	// // err = slot.SetPIN("25032016", "00000000")
-	// // if err != nil {
-	// // 	fmt.Printf("%s\n", err)
-	// // }
-	// // for k, v := range certex.MechanismMap {
-	// // 	fmt.Printf("key[%s] value[%x]\n", k, v)
-	// // }
-
-	// // fmt.Printf("slot: %+v\n", slot)
-	// // slotInfo, _ := slot.GetSlotInfo(0)
-	// // fmt.Printf("slotInfo: %+v\n", slotInfo)
-	// // sInfo, _ := slot.GetSessionInfo()
-	// // fmt.Printf("sInfo: %+v\n", sInfo)
-	// // tokenInfo, _ := slot.GetTokenInfo(0)
-	// // fmt.Printf("tokenInfo: %+v\n", tokenInfo)
 
 	m.Run()
 	slot.Close()
