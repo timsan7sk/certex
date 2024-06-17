@@ -19,17 +19,14 @@ import (
 	"unsafe"
 )
 
-// Путь до конфига
-var path = "/home/timsan/Sources/Golang/Certex/rcsp.conf"
-
 // Connect to the HSM
-func connect(p unsafe.Pointer) {
+func connect(p unsafe.Pointer, confPath string) {
 
 	cCon := C.CString("rcsp_connect")
 	defer C.free(unsafe.Pointer(cCon))
 
 	cConFn := (C.D_rcsp_connect)(C.dlsym(p, cCon))
-	cPath := C.CString(path)
+	cPath := C.CString(confPath)
 	defer C.free(unsafe.Pointer(cPath))
 
 	C.connect(cConFn, cPath)

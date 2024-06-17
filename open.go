@@ -24,14 +24,14 @@ import (
 )
 
 // Opens Cryptoki module
-func Open(libName string) (*Cryptoki, error) {
+func Open(libName string, confPath string) (*Cryptoki, error) {
 
 	mod, err := dlOpen(libName)
 	if err != nil {
 		fmt.Printf("dlOpen: %s\n", err)
 		os.Exit(1)
 	}
-	connect(mod)
+	connect(mod, confPath)
 
 	var p C.CK_FUNCTION_LIST_PTR
 

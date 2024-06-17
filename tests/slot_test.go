@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -17,9 +16,7 @@ func TestGetSlotInfo(t *testing.T) {
 	}
 }
 func TestGetSessionInfo(t *testing.T) {
-	if s, err := slot.GetSessionInfo(); err != nil {
+	if _, err := slot.GetSessionInfo(); err != nil {
 		t.Fatal(err)
-	} else {
-		fmt.Printf("%+v\n", s)
 	}
 }

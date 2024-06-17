@@ -9,7 +9,8 @@ import (
 
 const (
 	libName = "libcertex-rcsp_r.so.1"
-
+	// Путь до конфига
+	confPath = "/home/timsan/Sources/Golang/Certex/rcsp.conf"
 	// testAdminPIN = ""
 	testPIN    = "25032016"
 	testSlotID = 0
@@ -24,7 +25,7 @@ var (
 
 func TestMain(m *testing.M) {
 	var err error
-	mod, err = certex.Open(libName)
+	mod, err = certex.Open(libName, confPath)
 	if err != nil {
 		fmt.Println("Open module error: ", err)
 		os.Exit(1)
