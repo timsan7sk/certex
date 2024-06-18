@@ -84,7 +84,7 @@ func (o *Object) SignUpdate(message []byte) error {
 }
 
 // Finishes a multiple-part signature operation, returning the signature.
-func (o *Object) SignFinal(data []byte) ([]byte, error) {
+func (o *Object) SignFinal() ([]byte, error) {
 	var cSig C.CK_BYTE_PTR
 	var cSigLen C.CK_ULONG
 

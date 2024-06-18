@@ -51,9 +51,9 @@
 | C_DecryptFinal:        | + | +  | -    | Finishes a multiple-part decryption operation.|
 | C_DigestInit:          | + | +  | +    | Initializes a message-digesting operation.|
 | C_Digest:              | + | +  | +    | Digests data in a single part.|
-| C_DigestUpdate:        | + | +  | -    | Continues a multiple-part message-digesting operation.|
+| C_DigestUpdate:        | + | +  | +    | Continues a multiple-part message-digesting operation.|
 | C_DigestKey:           | + | +  | -    | Continues a multi-part message-digesting operation, by digesting the value of a secret key as part of the data already digested.|
-| C_DigestFinal:         | + | +  | -    | Finishes a multiple-part message-digesting operation.
+| C_DigestFinal:         | + | +  | +    | Finishes a multiple-part message-digesting operation.
 | C_SignInit:            | + | +  | +    | Initializes a signature (private key encryption) operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
 | C_Sign:                | + | +  | +    | Signs (encrypts with private key) data in a single part, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
 | C_SignUpdate:          | + | +  | -    | Continues a multiple-part signature operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
