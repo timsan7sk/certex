@@ -19,11 +19,20 @@ import (
 )
 
 func (m *Cryptoki) Slot(id uint32, opts Options) (*Slot, error) {
-
+	var (
+		ut  uint
+		pin string
+	)
 	if opts.AdminPIN != "" && opts.PIN != "" {
 		return nil, fmt.Errorf("can't specify pin and admin pin")
 	}
-
+	if opts.AdminPIN != "" {
+		ut = CKU_SO
+		pin = opts.AdminPIN
+	} else {
+		ut = CKU_USER
+		pin = opts.PIN
+	}
 	hs, err := m.openSession(id, opts)
 	if err != nil {
 		return nil, err
@@ -35,7 +44,7 @@ func (m *Cryptoki) Slot(id uint32, opts Options) (*Slot, error) {
 		rw: opts.ReadWrite,
 		id: id,
 	}
-	if err := s.login(opts.PIN, C.CKU_USER); err != nil {
+	if err := s.login(pin, ut); err != nil {
 		s.Close()
 		return nil, err
 	}
