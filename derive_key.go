@@ -22,10 +22,10 @@ import "fmt"
 // Derives a key from a base key, creating a new key object.
 func (o *Object) DeriveKey(m *Mechanism, a []*Attribute) (ObjectHandle, error) {
 	var newKey C.CK_OBJECT_HANDLE
-	attrarena, caa, caalen := cAttributeArray(a)
-	defer attrarena.Free()
-	mecharena, mech := cMechanism(m)
-	defer mecharena.Free()
+	attrArena, caa, caalen := cAttributeArray(a)
+	defer attrArena.Free()
+	mechArena, mech := cMechanism(m)
+	defer mechArena.Free()
 	if rv := C.derive_key(o.fl, o.h, mech, o.o, caa, caalen, &newKey); rv != C.CKR_OK {
 		return 0, fmt.Errorf("derive_key: 0x%x : %s", rv, returnValues[rv])
 	}

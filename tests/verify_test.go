@@ -8,11 +8,10 @@ import (
 func verifyTest(t *testing.T, d string, s string) {
 	objs := findObjectsTest(t, fPubKey)
 	for _, o := range objs {
-		l, _ := o.Label()
-		if l == "NUC_TEST_GOST_2015" {
+		if l, _ := o.Label(); l == testLabel0 {
 			d, _ := base64.StdEncoding.DecodeString(d)
 			s, _ := base64.StdEncoding.DecodeString(s)
-			if err := o.VerifyInit(&sigMech); err != nil {
+			if err := o.VerifyInit(&sMech); err != nil {
 				t.Fatal(err)
 			} else {
 				if err := o.Verify(d, s); err != nil {

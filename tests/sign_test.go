@@ -1,26 +1,19 @@
 package tests
 
 import (
-	"certex"
 	"encoding/base64"
 	"fmt"
 	"testing"
 )
-
-var sigMech = certex.Mechanism{
-	Mechanism: certex.Mechanisms["CKM_CERTEX_GOSTR3410_2015"],
-	Parameter: nil,
-}
 
 func signTest(t *testing.T, d string) string {
 	var s string
 	objs := findObjectsTest(t, fPrivKey)
 	for _, o := range objs {
 		l, _ := o.Label()
-		// fmt.Printf("l: %s\n", l)
-		if l == "NUC_TEST_GOST_2015" {
+		if l == testLabel0 {
 			d, _ := base64.StdEncoding.DecodeString(d)
-			if err := o.SignInit(&sigMech); err != nil {
+			if err := o.SignInit(&sMech); err != nil {
 				t.Fatal(err)
 			} else {
 				if d, err := o.Sign(d); err != nil {
@@ -37,9 +30,8 @@ func signUpdateTest(t *testing.T, d string) string {
 	var s string
 	objs := findObjectsTest(t, fPrivKey)
 	for _, o := range objs {
-		l, _ := o.Label()
-		if l == "NUC_TEST_GOST_2015" {
-			if err := o.SignInit(&sigMech); err != nil {
+		if l, _ := o.Label(); l == testLabel0 {
+			if err := o.SignInit(&suMech); err != nil {
 				t.Fatal(err)
 			} else {
 				d, _ := base64.StdEncoding.DecodeString(d)
@@ -63,6 +55,6 @@ func TestSign(t *testing.T) {
 	signTest(t, d)
 }
 func TestSignUpdate(t *testing.T) {
-	d := digestTest(t)
+	d := digestUpdateTest(t)
 	signUpdateTest(t, d)
 }

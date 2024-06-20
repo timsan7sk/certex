@@ -27,7 +27,10 @@ const (
 	ClassPublicKey        Class = 0x00000002
 	ClassPrivateKey       Class = 0x00000003
 	ClassSecretKey        Class = 0x00000004
+	ClassHwFeature        Class = 0x00000005
 	ClassDomainParameters Class = 0x00000006
+	ClassMechanism        Class = 0x00000007
+	ClassVendorDefined    Class = 0x80000000
 )
 
 var classString = map[Class]string{
@@ -36,7 +39,10 @@ var classString = map[Class]string{
 	ClassPublicKey:        "CKO_PUBLIC_KEY",
 	ClassPrivateKey:       "CKO_PRIVATE_KEY",
 	ClassSecretKey:        "CKO_SECRET_KEY",
+	ClassHwFeature:        "CKO_HW_FEATURE",
 	ClassDomainParameters: "CKO_DOMAIN_PARAMETERS",
+	ClassMechanism:        "CKO_MECHANISM",
+	ClassVendorDefined:    "CKO_VENDOR_DEFINED",
 }
 
 // Returns a human readable version of the object class.

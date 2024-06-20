@@ -15,8 +15,26 @@ const (
 	testPIN    = "25032016"
 	testSlotID = 0
 
-// testLabel    = "test_label"
+	testLabel0 = "NUC_TEST_GOST_2015"
+	testLabel1 = "NCA_RSA_TEST"
 )
+
+var digMech = certex.Mechanism{
+	Mechanism: certex.Mechanisms["CKM_CERTEX_GOSTR3411_2012_64"],
+	Parameter: nil,
+}
+var sMech = certex.Mechanism{
+	Mechanism: certex.Mechanisms["CKM_CERTEX_GOSTR3410_2012"],
+	Parameter: nil,
+}
+var srMech = certex.Mechanism{
+	Mechanism: certex.Mechanisms["CKM_RSA_PKCS"],
+	Parameter: nil,
+}
+var suMech = certex.Mechanism{
+	Mechanism: certex.Mechanisms["CKM_CERTEX_GOSTR3410_2001"],
+	Parameter: nil,
+}
 
 var (
 	mod  *certex.Cryptoki
