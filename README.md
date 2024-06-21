@@ -56,8 +56,8 @@
 | C_DigestFinal:         | + | +  | +    | Finishes a multiple-part message-digesting operation.
 | C_SignInit:            | + | +  | +    | Initializes a signature (private key encryption) operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
 | C_Sign:                | + | +  | +    | Signs (encrypts with private key) data in a single part, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
-| C_SignUpdate:          | + | +  | -    | Continues a multiple-part signature operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
-| C_SignFinal:           | + | +  | -    | Finishes a multiple-part signature operation, returning the signature.|
+| C_SignUpdate:          | + | +  | +    | Continues a multiple-part signature operation, where the signature is (will be) an appendix to the data, and plaintext cannot be recovered from the signature.|
+| C_SignFinal:           | + | +  | +    | Finishes a multiple-part signature operation, returning the signature.|
 | C_SignRecoverInit:     | + | +  | +    | Initializes a signature operation, where the data can be recovered from the signature.|
 | C_SignRecover:         | + | +  | +    | Signs data in a single operation, where the data can be recovered from the signature.|
 | C_VerifyInit:          | + | +  | +    | Initializes a verification operation, where the signature is an appendix to the data, and plaintext cannot be recovered from the signature (e.g. DSA).|

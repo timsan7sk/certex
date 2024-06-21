@@ -19,12 +19,12 @@ import "C"
 import "fmt"
 
 // Copies an object, creating a new object for the copy and return the handle to the new object.
-func (o *Object) CopyObject(temp []*Attribute) (C.CK_OBJECT_HANDLE, error) {
-	var hObject C.CK_OBJECT_HANDLE
-	arena, pAttr, ulCount := cAttribute(temp)
+func (o *Object) CopyObject(attrs []*Attribute) (ObjectHandle, error) {
+	var hNewObject C.CK_OBJECT_HANDLE
+	arena, cAttrs, ulCount := cAttribute(attrs)
 	defer arena.Free()
-	if rv := C.copy_object(o.fl, o.h, o.o, pAttr, ulCount, C.CK_OBJECT_HANDLE_PTR(&hObject)); rv != C.CKR_OK {
+	if rv := C.copy_object(o.fl, o.h, o.o, cAttrs, ulCount, &hNewObject); rv != C.CKR_OK {
 		return 0, fmt.Errorf("CopyObject: 0x%x : %s", rv, returnValues[rv])
 	}
-	return hObject, nil
+	return ObjectHandle(hNewObject), nil
 }
