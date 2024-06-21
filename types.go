@@ -158,3 +158,25 @@ type Options struct {
 	// By default, sessions can access objects and perform signing requests.
 	ReadWrite bool
 }
+
+// Obtains information about a particular token
+type TokenInfo struct {
+	Label              string
+	ManufacturerID     string
+	Model              string
+	SerialNumber       string
+	Flags              uint
+	MaxSessionCount    uint
+	SessionCount       uint
+	MaxRwSessionCount  uint
+	RwSessionCount     uint
+	MaxPinLen          uint
+	MinPinLen          uint
+	TotalPublicMemory  uint
+	FreePublicMemory   uint
+	TotalPrivateMemory uint
+	FreePrivateMemory  uint
+	HardwareVersion    Version
+	FirmwareVersion    Version
+	TimeUTC            string
+}

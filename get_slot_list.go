@@ -22,7 +22,7 @@ import "fmt"
 func (m *Cryptoki) GetSlotList() ([]uint32, error) {
 	var n C.CK_ULONG
 	if rv := C.get_slot_list(m.fl, nil, &n); rv != C.CKR_OK {
-		return nil, fmt.Errorf("GetSlotList: 0x%x", rv)
+		return nil, fmt.Errorf("get_slot_list: 0x%x : %s", rv, returnValues[rv])
 	}
 
 	l := make([]C.CK_SLOT_ID, int(n))
