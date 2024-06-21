@@ -21,7 +21,7 @@ import "fmt"
 // Generates a secret key, creating a new key object.
 func (s *Slot) GenerateKey(m *Mechanism, temp []*Attribute) (ObjectHandle, error) {
 	var newKey C.CK_OBJECT_HANDLE
-	attrarena, t, tcount := cAttributeArray(temp)
+	attrarena, t, tcount := cAttribute(temp)
 	defer attrarena.Free()
 	mecharena, mech := cMechanism(m)
 	defer mecharena.Free()

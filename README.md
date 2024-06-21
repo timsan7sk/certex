@@ -34,7 +34,7 @@
 | C_Logout:              | + | +  | +    | Logs a user out from a token.|
 | C_CreateObject:        | + | +  | -    | Creates a new object.|
 | C_CopyObject:          | + | +  | -    | Copies an object, creating a new object for the copy.|
-| C_DestroyObject:       | + | +  | -    | Destroys an object.|
+| C_DestroyObject:       | + | +  | +    | Destroys an object.|
 | C_GetObjectSize:       | + | +  | +    | Gets the size of an object in bytes.|
 | C_GetAttributeValue:   | + | +  | -    | Obtains the value of one or more object attributes.|
 | C_SetAttributeValue:   | + | +  | -    | Modifies the value of one or more object attributes.|
@@ -71,7 +71,7 @@
 | C_SignEncryptUpdate:   | + | +  | -    | Continues a multiple-part signing and encryption operation.|
 | C_DecryptVerifyUpdate: | + | +  | -    | Continues a multiple-part decryption and verify operation.|
 | C_GenerateKey:         | + | +  | -    | Generates a secret key, creating a new key object.|
-| C_GenerateKeyPair:     | + | +  | -    | Generates a public-key/private-key pair, creating new key objects.|
+| C_GenerateKeyPair:     | + | +  | +    | Generates a public-key/private-key pair, creating new key objects.|
 | C_WrapKey:             | + | +  | -    | Wraps (i.e., encrypts) a key.|
 | C_UnwrapKey:           | + | +  | -    | Unwraps (decrypts) a wrapped key, creating a new key object.|
 | C_DeriveKey:           | + | +  | -    | Derives a key from a base key, creating a new key object.|

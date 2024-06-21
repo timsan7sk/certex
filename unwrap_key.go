@@ -24,7 +24,7 @@ import (
 
 func (o *Object) UnwrapKey(m *Mechanism, unwrappingKey ObjectHandle, wrappedKey []byte, a []*Attribute) (ObjectHandle, error) {
 	var key C.CK_OBJECT_HANDLE
-	attrarena, caa, caalen := cAttributeArray(a)
+	attrarena, caa, caalen := cAttribute(a)
 	defer attrarena.Free()
 	mecharena, mech := cMechanism(m)
 	defer mecharena.Free()

@@ -25,9 +25,9 @@ func (s *Slot) GenerateKeyPair(m *Mechanism, public, private []*Attribute) (Obje
 		pubKey  C.CK_OBJECT_HANDLE
 		privKey C.CK_OBJECT_HANDLE
 	)
-	pubarena, pub, publen := cAttributeArray(public)
+	pubarena, pub, publen := cAttribute(public)
 	defer pubarena.Free()
-	privarena, priv, privlen := cAttributeArray(private)
+	privarena, priv, privlen := cAttribute(private)
 	defer privarena.Free()
 	mecharena, mech := cMechanism(m)
 	defer mecharena.Free()

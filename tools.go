@@ -198,25 +198,6 @@ func NewAttribute(typ uint, x interface{}) *Attribute {
 	return a
 }
 
-// cAttribute returns the start address and the length of an attribute array.
-func cAttributeArray(a []*Attribute) (arena, C.CK_ATTRIBUTE_PTR, C.CK_ULONG) {
-	var arena arena
-	if len(a) == 0 {
-		return nil, nil, 0
-	}
-	pa := make([]C.CK_ATTRIBUTE, len(a))
-	for i, attr := range a {
-		pa[i]._type = C.CK_ATTRIBUTE_TYPE(attr.Type)
-		if len(attr.Value) != 0 {
-			buf, len := arena.Allocate(attr.Value)
-			// field is unaligned on windows so this has to call into C
-			C.putAttributePval(&pa[i], buf)
-			pa[i].ulValueLen = len
-		}
-	}
-	return arena, &pa[0], C.CK_ULONG(len(a))
-}
-
 func uintToBytes(x uint64) []byte {
 	ul := C.CK_ULONG(x)
 	return memBytes(unsafe.Pointer(&ul), unsafe.Sizeof(ul))
