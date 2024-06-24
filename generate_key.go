@@ -19,14 +19,18 @@ import "C"
 import "fmt"
 
 // Generates a secret key, creating a new key object.
-func (s *Slot) GenerateKey(m *Mechanism, temp []*Attribute) (ObjectHandle, error) {
+func (s *Slot) GenerateKey(m *Mechanism, temp []*Attribute) (Object, error) {
 	var newKey C.CK_OBJECT_HANDLE
 	attrarena, t, tcount := cAttribute(temp)
 	defer attrarena.Free()
 	mecharena, mech := cMechanism(m)
 	defer mecharena.Free()
 	if rv := C.generate_key(s.fl, s.h, mech, t, tcount, C.CK_OBJECT_HANDLE_PTR(&newKey)); rv != C.CKR_OK {
-		return 0, fmt.Errorf("generate_key: 0x%x : %s", rv, returnValues[rv])
+		return Object{}, fmt.Errorf("generate_key: 0x%x : %s", rv, returnValues[rv])
 	}
-	return ObjectHandle(newKey), nil
+	key, err := s.newObject(newKey)
+	if err != nil {
+		return Object{}, err
+	}
+	return key, nil
 }
