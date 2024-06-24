@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func generateKeyPair(t *testing.T) (certex.ObjectHandle, certex.ObjectHandle) {
+func generateKeyPairTest(t *testing.T) (certex.Object, certex.Object) {
 	public := []*certex.Attribute{
 		certex.NewAttribute(certex.CKA_CLASS, certex.CKO_PUBLIC_KEY),
 		certex.NewAttribute(certex.CKA_KEY_TYPE, certex.CKK_RSA),
@@ -30,5 +30,7 @@ func generateKeyPair(t *testing.T) (certex.ObjectHandle, certex.ObjectHandle) {
 	return pubKey, privKey
 }
 func TestGenerateKeyPair(t *testing.T) {
-	_, _ = generateKeyPair(t)
+	pub, priv := generateKeyPairTest(t)
+	_ = pub.DestroyObject()
+	_ = priv.DestroyObject()
 }
