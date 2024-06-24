@@ -32,7 +32,7 @@
 | C_SetOperationState:   | + | +  | -    | Restores the state of the cryptographic operation in a session.|
 | C_Login:               | + | +  | +    | Logs a user into a token.|
 | C_Logout:              | + | +  | +    | Logs a user out from a token.|
-| C_CreateObject:        | + | +  | -    | Creates a new object.|
+| C_CreateObject:        | + | +  | +    | Creates a new object.|
 | C_CopyObject:          | + | +  | -    | Copies an object, creating a new object for the copy.|
 | C_DestroyObject:       | + | +  | +    | Destroys an object.|
 | C_GetObjectSize:       | + | +  | +    | Gets the size of an object in bytes.|
