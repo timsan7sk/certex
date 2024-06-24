@@ -20,12 +20,16 @@ import (
 	"fmt"
 )
 
-func (s *Slot) CreateObject(attrs []*Attribute) (ObjectHandle, error) {
+func (s *Slot) CreateObject(attrs []*Attribute) (Object, error) {
 	var hObject C.CK_OBJECT_HANDLE
 	arena, cAttrs, ulCount := cAttribute(attrs)
 	defer arena.Free()
 	if rv := C.create_object(s.fl, s.h, cAttrs, ulCount, &hObject); rv != C.CKR_OK {
-		return 0, fmt.Errorf("CreateObject: 0x%x : %s", rv, returnValues[rv])
+		return Object{}, fmt.Errorf("CreateObject: 0x%x : %s", rv, returnValues[rv])
 	}
-	return ObjectHandle(hObject), nil
+	o, err := s.newObject(hObject)
+	if err != nil {
+		return Object{}, fmt.Errorf("newObject: %+v", err)
+	}
+	return o, nil
 }
