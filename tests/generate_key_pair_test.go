@@ -16,6 +16,8 @@ func generateKeyPairTest(t *testing.T) (certex.Object, certex.Object) {
 		certex.NewAttribute(certex.CKA_LABEL, "TIMSAN_RSA_TEST_KEY"),
 	}
 	private := []*certex.Attribute{
+		certex.NewAttribute(certex.CKA_CLASS, certex.CKO_PRIVATE_KEY),
+		certex.NewAttribute(certex.CKA_KEY_TYPE, certex.CKK_RSA),
 		certex.NewAttribute(certex.CKA_TOKEN, false),
 		certex.NewAttribute(certex.CKA_SIGN, true),
 		certex.NewAttribute(certex.CKA_LABEL, "TIMSAN_RSA_TEST_KEY"),

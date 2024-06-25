@@ -41,8 +41,8 @@
 | C_FindObjectsInit:     | + | +  | +    | Initializes a search for token and session objects that match a template.|
 | C_FindObjects:         | + | +  | +    | Continues a search for token and session objects that match a template, obtaining additional object handles.|
 | C_FindObjectsFinal:    | + | +  | +    | Finishes a search for token and session objects.|
-| C_EncryptInit:         | + | +  | -    | Initializes an encryption operation.|
-| C_Encrypt:             | + | +  | -    | Encrypts single-part data.|
+| C_EncryptInit:         | + | +  | +    | Initializes an encryption operation.|
+| C_Encrypt:             | + | +  | +    | Encrypts single-part data.|
 | C_EncryptUpdate:       | + | +  | -    | Continues a multiple-part encryption operation.|
 | C_EncryptFinal:        | + | +  | -    | Finishes a multiple-part encryption operation.|
 | C_DecryptInit:         | + | +  | -    | Initializes a decryption operation.|
