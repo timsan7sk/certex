@@ -22,14 +22,15 @@ import (
 	"unsafe"
 )
 
-func (o *Object) UnwrapKey(m *Mechanism, unwrappingKey ObjectHandle, wrappedKey []byte, a []*Attribute) (ObjectHandle, error) {
+// Unwraps (i.e. decrypts) a wrapped key, creating a new private key or secret key object.
+func (o *Object) UnwrapKey(m *Mechanism, wrappedKey []byte, a []*Attribute) (ObjectHandle, error) {
 	var key C.CK_OBJECT_HANDLE
-	attrarena, caa, caalen := cAttribute(a)
-	defer attrarena.Free()
-	mecharena, mech := cMechanism(m)
-	defer mecharena.Free()
+	attrArena, caa, caalen := cAttribute(a)
+	defer attrArena.Free()
+	mechArena, mech := cMechanism(m)
+	defer mechArena.Free()
 
-	if rv := C.unwrap_key(o.fl, o.h, mech, C.CK_OBJECT_HANDLE(unwrappingKey), C.CK_BYTE_PTR(unsafe.Pointer(&wrappedKey[0])), C.CK_ULONG(len(wrappedKey)), caa, caalen, &key); rv != C.CKR_OK {
+	if rv := C.unwrap_key(o.fl, o.h, mech, o.o, C.CK_BYTE_PTR(unsafe.Pointer(&wrappedKey[0])), C.CK_ULONG(len(wrappedKey)), caa, caalen, &key); rv != C.CKR_OK {
 		return 0, fmt.Errorf("unwrap_key: 0x%x : %s", rv, returnValues[rv])
 	}
 	return ObjectHandle(key), nil
