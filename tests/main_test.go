@@ -57,17 +57,6 @@ func TestMain(m *testing.M) {
 		fmt.Println("Open slot error: ", err)
 		os.Exit(1)
 	}
-	// // sopt := certex.SlotOptions{
-	// // 	AdminPIN: "25032016",
-	// // 	PIN:      "25032016",
-	// // 	Label:    "Test_Label",
-	// // }
-	// // slotList, _ := mod.GetSlotList()
-	// // fmt.Printf("slotList: %+v\n", slotList)
-	// // if err := mod.InitToken(0, sopt); err != nil {
-	// // 	fmt.Printf("%s\n", err)
-	// // }
-
 	m.Run()
 	slot.Close()
 	mod.Close()
