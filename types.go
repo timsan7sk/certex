@@ -94,10 +94,13 @@ type MechanismInfo struct {
 // Represents a single object stored within a slot. For example a key or
 // certificate.
 type Object struct {
+	p
+	o C.CK_OBJECT_HANDLE
+	c C.CK_OBJECT_CLASS
+}
+type p struct {
 	fl C.CK_FUNCTION_LIST_PTR
 	h  C.CK_SESSION_HANDLE
-	o  C.CK_OBJECT_HANDLE
-	c  C.CK_OBJECT_CLASS
 }
 
 // ObjectHandle is a token-specific identifier for an object.
@@ -122,8 +125,7 @@ type SessionInfo struct {
 // A session holds a listable set of objects, such as certificates and
 // cryptographic keys.
 type Slot struct {
-	fl C.CK_FUNCTION_LIST_PTR
-	h  C.CK_SESSION_HANDLE
+	p
 	rw bool
 	id uint32
 }

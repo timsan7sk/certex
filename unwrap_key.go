@@ -23,7 +23,7 @@ import (
 )
 
 // Unwraps (i.e. decrypts) a wrapped key, creating a new private key or secret key object.
-func (o *Object) UnwrapKey(m *Mechanism, wrappedKey []byte, a []*Attribute) (ObjectHandle, error) {
+func (o *Object) UnwrapKey(m *Mechanism, wrappedKey []byte, a []*Attribute) (Object, error) {
 	var key C.CK_OBJECT_HANDLE
 	attrArena, caa, caalen := cAttribute(a)
 	defer attrArena.Free()
@@ -31,7 +31,11 @@ func (o *Object) UnwrapKey(m *Mechanism, wrappedKey []byte, a []*Attribute) (Obj
 	defer mechArena.Free()
 
 	if rv := C.unwrap_key(o.fl, o.h, mech, o.o, C.CK_BYTE_PTR(unsafe.Pointer(&wrappedKey[0])), C.CK_ULONG(len(wrappedKey)), caa, caalen, &key); rv != C.CKR_OK {
-		return 0, fmt.Errorf("unwrap_key: 0x%x : %s", rv, returnValues[rv])
+		return Object{}, fmt.Errorf("unwrap_key: 0x%x : %s", rv, returnValues[rv])
 	}
-	return ObjectHandle(key), nil
+	obj, err := o.newObject(key)
+	if err != nil {
+		return Object{}, fmt.Errorf("newObject: %s", err)
+	}
+	return obj, nil
 }

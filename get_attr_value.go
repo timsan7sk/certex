@@ -53,7 +53,7 @@ func (o Object) GetAttributeValue(attrs []*Attribute) ([]*Attribute, error) {
 
 	return pAttrs, nil
 }
-func (s *Slot) newObject(oh C.CK_OBJECT_HANDLE) (Object, error) {
+func (s *p) newObject(oh C.CK_OBJECT_HANDLE) (Object, error) {
 	objClass := C.CK_OBJECT_CLASS_PTR(C.malloc(C.sizeof_CK_OBJECT_CLASS))
 	defer C.free(unsafe.Pointer(objClass))
 
@@ -64,5 +64,5 @@ func (s *Slot) newObject(oh C.CK_OBJECT_HANDLE) (Object, error) {
 	if rv := C.get_attribute_value(s.fl, s.h, oh, &a[0], C.CK_ULONG(len(a))); rv != C.CKR_OK {
 		return Object{}, fmt.Errorf("newObject: 0x%x : %s", rv, returnValues[rv])
 	}
-	return Object{s.fl, s.h, oh, *objClass}, nil
+	return Object{p{fl: s.fl, h: s.h}, oh, *objClass}, nil
 }
