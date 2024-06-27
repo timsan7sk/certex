@@ -31,18 +31,18 @@ import (
 )
 
 // Wraps (i.e., encrypts) a private or secret key
-// hKey is the handle of the key to be wrapped
-func (o *Object) WrapKey(m *Mechanism, hKey ObjectHandle) ([]byte, error) {
+// Param key is the Object of the key to be wrapped
+func (o *Object) WrapKey(m *Mechanism, key Object) ([]byte, error) {
 	var (
 		wrappedKey    C.CK_BYTE_PTR
 		wrappedKeyLen C.CK_ULONG
 	)
 	arena, mech := cMechanism(m)
 	defer arena.Free()
-	if rv := C.wrap_key(o.fl, o.h, mech, o.o, C.CK_OBJECT_HANDLE(hKey), &wrappedKey, &wrappedKeyLen); rv != C.CKR_OK {
+	if rv := C.wrap_key(o.fl, o.h, mech, o.o, key.o, &wrappedKey, &wrappedKeyLen); rv != C.CKR_OK {
 		return nil, fmt.Errorf("wrap_key: 0x%x : %s", rv, returnValues[rv])
 	}
-	r := C.GoBytes(unsafe.Pointer(wrappedKey), C.int(wrappedKeyLen))
+	k := C.GoBytes(unsafe.Pointer(wrappedKey), C.int(wrappedKeyLen))
 	C.free(unsafe.Pointer(wrappedKey))
-	return r, nil
+	return k, nil
 }

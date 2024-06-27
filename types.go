@@ -103,9 +103,6 @@ type p struct {
 	h  C.CK_SESSION_HANDLE
 }
 
-// ObjectHandle is a token-specific identifier for an object.
-type ObjectHandle uint
-
 // Returns the type of the object stored. For example, certificate, public
 // key, or private key.
 func (o Object) Class() Class {
