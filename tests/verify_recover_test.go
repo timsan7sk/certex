@@ -1,27 +1,24 @@
 package tests
 
 import (
-	"encoding/base64"
 	"testing"
 )
 
-func verifyRecoverTest(t *testing.T, s string) string {
-	var r []byte
-	objs := findObjectsTest(t, fPubKey)
-	for _, o := range objs {
-		if l, _ := o.Label(); l == testLabel1 {
-			s, _ := base64.StdEncoding.DecodeString(s)
-
-			if err := o.VerifyRecoverInit(&srMech); err != nil {
-				t.Fatal(err)
-			} else {
-				if r, err = o.VerifyRecover(s); err != nil {
-					t.Fatal(err)
-				}
-			}
+func verifyRecoverTest(t *testing.T, s []byte) []byte {
+	var v []byte
+	pub, priv := generateKeyPairTest(t)
+	if err := pub.VerifyRecoverInit(mechSigGOST); err != nil {
+		t.Fatal(err)
+	} else {
+		if r, err := pub.VerifyRecover(s); err != nil {
+			t.Fatal(err)
+		} else {
+			v = r
 		}
 	}
-	return base64.RawStdEncoding.EncodeToString(r)
+	_ = pub.DestroyObject()
+	_ = priv.DestroyObject()
+	return v
 }
 
 func TestVerifyRecover(t *testing.T) {

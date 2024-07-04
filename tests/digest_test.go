@@ -1,57 +1,48 @@
 package tests
 
 import (
-	"encoding/base64"
 	"testing"
 )
 
-func digestTest(t *testing.T) string {
-	var s string
-	objs := findObjectsTest(t, fPrivKey)
-	for _, o := range objs {
-		if l, _ := o.Label(); l == testLabel0 {
-			d, _ := base64.StdEncoding.DecodeString("TEST_DATA_FOR_DIGEST")
-			if err := o.DigestInit(&digMech); err != nil {
-				t.Fatal(err)
-			} else {
-				if d, err := o.Digest(d); err != nil {
-					t.Fatal(err)
-				} else {
-					s = base64.StdEncoding.EncodeToString(d)
-				}
-			}
+func digestTest(t *testing.T) []byte {
+	var d []byte
+	pub, priv := generateKeyPairTest(t)
+	if err := priv.DigestInit(mechDigGOST); err != nil {
+		t.Fatal(err)
+	} else {
+		if d, err = priv.Digest(testData); err != nil {
+			t.Fatal(err)
 		}
 	}
-	return s
+	_ = pub.DestroyObject()
+	_ = priv.DestroyObject()
+	return d
 }
 
-func digestUpdateTest(t *testing.T) string {
-	var s string
-	objs := findObjectsTest(t, fPrivKey)
-	for _, o := range objs {
-		if l, _ := o.Label(); l == testLabel0 {
-			if err := o.DigestInit(&digMech); err != nil {
+func digestUpdateTest(t *testing.T) []byte {
+	var d []byte
+	pub, priv := generateKeyPairTest(t)
+	if err := priv.DigestInit(mechDigGOST); err != nil {
+		t.Fatal(err)
+	} else {
+		for i := 0; i < 3; i++ {
+			if err := priv.DigestUpdate(testData); err != nil {
 				t.Fatal(err)
-			} else {
-				d, _ := base64.StdEncoding.DecodeString("TEST_DATA_FOR_DIGEST")
-				for i := 0; i < 3; i++ {
-					if err := o.DigestUpdate(d); err != nil {
-						t.Fatal(err)
-					}
-				}
-				if c, err := o.DigestFinal(); err != nil {
-					t.Fatal(err)
-				} else {
-					s = base64.StdEncoding.EncodeToString(c)
-				}
 			}
 		}
+		if c, err := priv.DigestFinal(); err != nil {
+			t.Fatal(err)
+		} else {
+			d = c
+		}
 	}
-	return s
+	_ = pub.DestroyObject()
+	_ = priv.DestroyObject()
+	return d
 }
 func TestDigest(t *testing.T) {
-	digestTest(t)
+	_ = digestTest(t)
 }
 func TestDigestUpdate(t *testing.T) {
-	digestUpdateTest(t)
+	_ = digestUpdateTest(t)
 }

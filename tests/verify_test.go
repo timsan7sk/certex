@@ -1,17 +1,14 @@
 package tests
 
 import (
-	"encoding/base64"
 	"testing"
 )
 
-func verifyTest(t *testing.T, d string, s string) {
+func verifyTest(t *testing.T, d, s []byte) {
 	objs := findObjectsTest(t, fPubKey)
 	for _, o := range objs {
 		if l, _ := o.Label(); l == testLabel0 {
-			d, _ := base64.StdEncoding.DecodeString(d)
-			s, _ := base64.StdEncoding.DecodeString(s)
-			if err := o.VerifyInit(&sMech); err != nil {
+			if err := o.VerifyInit(mechSigGOST); err != nil {
 				t.Fatal(err)
 			} else {
 				if err := o.Verify(d, s); err != nil {

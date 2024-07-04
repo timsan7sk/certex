@@ -15,6 +15,7 @@ package certex
 */
 import "C"
 import (
+	"fmt"
 	"unsafe"
 )
 
@@ -107,6 +108,35 @@ type p struct {
 // key, or private key.
 func (o Object) Class() Class {
 	return Class(int(o.c))
+}
+
+// Value returns an object's CKA_VALUE attribute, as bytes.
+func (o Object) Value() ([]byte, error) {
+	return o.Attribute(CKA_VALUE)
+}
+
+// Attribute gets exactly one attribute from a PKCS#11 object, returning
+// an error if the attribute is not found, or if multiple attributes are
+// returned. On success, it will return the value of that attribute as a slice
+// of bytes. For attributes not present (i.e. CKR_ATTRIBUTE_TYPE_INVALID),
+// Attribute returns a nil slice and nil error.
+func (o Object) Attribute(attributeType uint) ([]byte, error) {
+
+	attrs, err := o.GetAttributeValue([]*Attribute{NewAttribute(attributeType, nil)})
+	// The PKCS#11 spec states that C_GetAttributeValue may return
+	// CKR_ATTRIBUTE_TYPE_INVALID if an object simply does not posses a given
+	// attribute. We don't consider that an error, we just consider that
+	// equivalent to an empty value.
+	if err != nil {
+		return nil, err
+	}
+	if len(attrs) == 0 {
+		return nil, fmt.Errorf("Attribute not found")
+	}
+	if len(attrs) > 1 {
+		return nil, fmt.Errorf("Too many attributes found")
+	}
+	return attrs[0].Value, nil
 }
 
 // SessionInfo provides information about a session.

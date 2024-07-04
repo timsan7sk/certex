@@ -1,53 +1,45 @@
 package tests
 
 import (
-	"encoding/base64"
-	"fmt"
 	"testing"
 )
 
-func signTest(t *testing.T, d string) string {
-	var s string
-	objs := findObjectsTest(t, fPrivKey)
-	for _, o := range objs {
-		l, _ := o.Label()
-		if l == testLabel0 {
-			d, _ := base64.StdEncoding.DecodeString(d)
-			if err := o.SignInit(&sMech); err != nil {
-				t.Fatal(err)
-			} else {
-				if d, err := o.Sign(d); err != nil {
-					t.Fatal(err)
-				} else {
-					s = base64.StdEncoding.EncodeToString(d)
-				}
-			}
+func signTest(t *testing.T, d []byte) []byte {
+	var s []byte
+	pub, priv := generateKeyPairTest(t)
+
+	if err := priv.SignInit(mechSigGOST); err != nil {
+		t.Fatal(err)
+	} else {
+		if c, err := priv.Sign(d); err != nil {
+			t.Fatal(err)
+		} else {
+			s = c
 		}
 	}
+	_ = pub.DestroyObject()
+	_ = priv.DestroyObject()
 	return s
 }
-func signUpdateTest(t *testing.T, d string) string {
-	var s string
-	objs := findObjectsTest(t, fPrivKey)
-	for _, o := range objs {
-		if l, _ := o.Label(); l == testLabel0 {
-			if err := o.SignInit(&suMech); err != nil {
+func signUpdateTest(t *testing.T, d []byte) []byte {
+	var s []byte
+	pub, priv := generateKeyPairTest(t)
+	if err := priv.SignInit(mechSigGOST); err != nil {
+		t.Fatal(err)
+	} else {
+		for i := 0; i < 3; i++ {
+			if err := priv.SignUpdate(d); err != nil {
 				t.Fatal(err)
-			} else {
-				d, _ := base64.StdEncoding.DecodeString(d)
-				if err := o.SignUpdate(d); err != nil {
-					t.Fatal(err)
-				}
 			}
-			if b, err := o.SignFinal(); err != nil {
-				t.Fatal(err)
-			} else {
-				s = base64.StdEncoding.EncodeToString(b)
-			}
-
+		}
+		if c, err := priv.SignFinal(); err != nil {
+			t.Fatal(err)
+		} else {
+			s = c
 		}
 	}
-	fmt.Printf("s: %s", s)
+	_ = pub.DestroyObject()
+	_ = priv.DestroyObject()
 	return s
 }
 func TestSign(t *testing.T) {

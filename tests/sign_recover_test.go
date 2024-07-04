@@ -1,27 +1,24 @@
 package tests
 
 import (
-	"encoding/base64"
 	"testing"
 )
 
-func signRecoverTest(t *testing.T, d string) string {
-	var s string
-	objs := findObjectsTest(t, fPrivKey)
-	for _, o := range objs {
-		if l, _ := o.Label(); l == testLabel1 {
-			d, _ := base64.StdEncoding.DecodeString(d)
-			if err := o.SignRecoverInit(&srMech); err != nil {
-				t.Fatal(err)
-			} else {
-				if d, err := o.SignRecover(d); err != nil {
-					t.Fatal(err)
-				} else {
-					s = base64.StdEncoding.EncodeToString(d)
-				}
-			}
+func signRecoverTest(t *testing.T, d []byte) []byte {
+	var s []byte
+	pub, priv := generateKeyPairTest(t)
+
+	if err := priv.SignRecoverInit(mechSigGOST); err != nil {
+		t.Fatal(err)
+	} else {
+		if c, err := priv.SignRecover(d); err != nil {
+			t.Fatal(err)
+		} else {
+			s = c
 		}
 	}
+	_ = pub.DestroyObject()
+	_ = priv.DestroyObject()
 	return s
 }
 

@@ -24,7 +24,7 @@ func (o *Object) CopyObject(attrs []*Attribute) (Object, error) {
 	arena, cAttrs, ulCount := cAttribute(attrs)
 	defer arena.Free()
 	if rv := C.copy_object(o.fl, o.h, o.o, cAttrs, ulCount, &hNewObject); rv != C.CKR_OK {
-		return Object{}, fmt.Errorf("CopyObject: 0x%x : %s", rv, returnValues[rv])
+		return Object{}, fmt.Errorf("copy_object: 0x%x : %s", rv, returnValues[rv])
 	}
 	obj, err := o.newObject(hNewObject)
 	if err != nil {

@@ -154,12 +154,12 @@ func cData(data []byte) (pData C.CK_BYTE_PTR) {
 // Note that this is merely a convenience function, as values returned
 // from the HSM are not converted back to Go values, those are just raw
 // byte slices.
-func NewAttribute(typ uint, x interface{}) *Attribute {
+func NewAttribute(t uint, x interface{}) *Attribute {
 	// This function nicely transforms *to* an attribute, but there is
 	// no corresponding function that transform back *from* an attribute,
 	// which in PKCS#11 is just an byte array.
 	a := new(Attribute)
-	a.Type = typ
+	a.Type = t
 	if x == nil {
 		return a
 	}
@@ -193,7 +193,7 @@ func NewAttribute(typ uint, x interface{}) *Attribute {
 	case time.Time: // for CKA_DATE
 		a.Value = cDate(v)
 	default:
-		panic("pkcs11: unhandled attribute type")
+		panic("NewAttribute: unhandled attribute type")
 	}
 	return a
 }
