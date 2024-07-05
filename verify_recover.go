@@ -39,7 +39,7 @@ func (o *Object) VerifyRecoverInit(m *Mechanism) error {
 	arena, mech := cMechanism(m)
 	defer arena.Free()
 	if rv := C.verify_recover_init(o.fl, o.h, mech, o.o); rv != C.CKR_OK {
-		return fmt.Errorf("verify_recover_init: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("verify_recover_init: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -52,7 +52,7 @@ func (o *Object) VerifyRecover(signature []byte) ([]byte, error) {
 		datalen C.CK_ULONG
 	)
 	if rv := C.verify_recover(o.fl, o.h, cData(signature), C.CK_ULONG(len(signature)), &data, &datalen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("verify_recover: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("verify_recover: 0x%08x : %s", rv, returnValues[rv])
 	}
 	r := C.GoBytes(unsafe.Pointer(data), C.int(datalen))
 	C.free(unsafe.Pointer(data))

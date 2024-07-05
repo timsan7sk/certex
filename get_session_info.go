@@ -21,7 +21,7 @@ import "fmt"
 func (s *Slot) GetSessionInfo() (SessionInfo, error) {
 	var info C.CK_SESSION_INFO
 	if rv := C.get_session_info(s.fl, s.h, &info); rv != C.CKR_OK {
-		return SessionInfo{}, fmt.Errorf("get_session_info: 0x%x : %s", rv, returnValues[rv])
+		return SessionInfo{}, fmt.Errorf("get_session_info: 0x%08x : %s", rv, returnValues[rv])
 	}
 	si := SessionInfo{SlotID: uint(info.slotID),
 		State:       uint(info.state),

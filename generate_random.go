@@ -28,7 +28,7 @@ import (
 func (s *Slot) GenerateRandom(length int) ([]byte, error) {
 	var rand C.CK_BYTE_PTR
 	if rv := C.generate_random(s.fl, s.h, &rand, C.CK_ULONG(length)); rv != C.CKR_OK {
-		return nil, fmt.Errorf("GenerateRandom: 0x%x", rv)
+		return nil, fmt.Errorf("GenerateRandom: 0x%08x", rv)
 	}
 	r := C.GoBytes(unsafe.Pointer(rand), C.int(length))
 	C.free(unsafe.Pointer(rand))

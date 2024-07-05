@@ -29,7 +29,7 @@ func (s *Slot) login(pin string, userType uint) error {
 	cPIN := ckString(pin)
 	cPINLen := C.CK_ULONG(len(cPIN))
 	if rv := C.login(s.fl, s.h, C.CK_USER_TYPE(userType), &cPIN[0], cPINLen); rv != C.CKR_OK {
-		return fmt.Errorf("login: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("login: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }

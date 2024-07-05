@@ -27,7 +27,7 @@ func (o *Object) DeriveKey(m *Mechanism, a []*Attribute) (Object, error) {
 	mechArena, mech := cMechanism(m)
 	defer mechArena.Free()
 	if rv := C.derive_key(o.fl, o.h, mech, o.o, caa, caalen, &newKey); rv != C.CKR_OK {
-		return Object{}, fmt.Errorf("derive_key: 0x%x : %s", rv, returnValues[rv])
+		return Object{}, fmt.Errorf("derive_key: 0x%08x : %s", rv, returnValues[rv])
 	}
 	obj, err := o.newObject(newKey)
 	if err != nil {

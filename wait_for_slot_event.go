@@ -26,7 +26,7 @@ func (m *Cryptoki) WaitForSlotEvent(flags uint) chan SlotEvent {
 func (m *Cryptoki) waitForSlotEventHelper(flags uint, seChan chan SlotEvent) {
 	var slotID C.CK_ULONG
 	if rv := C.wait_for_slot_event(m.fl, C.CK_FLAGS(flags), &slotID); rv != C.CKR_OK {
-		fmt.Printf("waitForSlotEventHelper: 0x%x\n", rv)
+		fmt.Printf("waitForSlotEventHelper: 0x%08x\n", rv)
 	}
 	seChan <- SlotEvent{uint(slotID)}
 	close(seChan)

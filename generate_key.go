@@ -26,7 +26,7 @@ func (s *Slot) GenerateKey(m *Mechanism, temp []*Attribute) (Object, error) {
 	mecharena, mech := cMechanism(m)
 	defer mecharena.Free()
 	if rv := C.generate_key(s.fl, s.h, mech, t, tcount, C.CK_OBJECT_HANDLE_PTR(&newKey)); rv != C.CKR_OK {
-		return Object{}, fmt.Errorf("generate_key: 0x%x : %s", rv, returnValues[rv])
+		return Object{}, fmt.Errorf("generate_key: 0x%08x : %s", rv, returnValues[rv])
 	}
 	key, err := s.newObject(newKey)
 	if err != nil {

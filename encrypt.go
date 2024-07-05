@@ -64,7 +64,7 @@ func (o *Object) EncryptInit(m *Mechanism) error {
 	defer arena.Free()
 
 	if rv := C.encrypt_init(o.fl, o.h, cm, o.o); rv != C.CKR_OK {
-		return fmt.Errorf("encrypt_init: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("encrypt_init: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -76,7 +76,7 @@ func (o *Object) Encrypt(data []byte) ([]byte, error) {
 		enclen C.CK_ULONG
 	)
 	if rv := C.encrypt(o.fl, o.h, cData(data), C.CK_ULONG(len(data)), &enc, &enclen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("encrypt: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("encrypt: 0x%08x : %s", rv, returnValues[rv])
 	}
 	s := C.GoBytes(unsafe.Pointer(&enc), C.int(enclen))
 	C.free(unsafe.Pointer(enc))
@@ -91,7 +91,7 @@ func (o *Object) EncryptUpdate(plain []byte) ([]byte, error) {
 		partlen C.CK_ULONG
 	)
 	if rv := C.encrypt_update(o.fl, o.h, cData(plain), C.CK_ULONG(len(plain)), &part, &partlen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("encrypt_final: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("encrypt_final: 0x%08x : %s", rv, returnValues[rv])
 	}
 
 	h := C.GoBytes(unsafe.Pointer(part), C.int(partlen))
@@ -106,7 +106,7 @@ func (o *Object) EncryptFinal() ([]byte, error) {
 		enclen C.CK_ULONG
 	)
 	if rv := C.encrypt_final(o.fl, o.h, &enc, &enclen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("encrypt_final: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("encrypt_final: 0x%08x : %s", rv, returnValues[rv])
 	}
 	h := C.GoBytes(unsafe.Pointer(enc), C.int(enclen))
 	C.free(unsafe.Pointer(enc))

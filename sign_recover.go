@@ -37,7 +37,7 @@ func (o *Object) SignRecoverInit(mech *Mechanism) error {
 	var arena, cm = cMechanism(mech)
 	defer arena.Free()
 	if rv := C.sign_recover_init(o.fl, o.h, cm, o.o); rv != C.CKR_OK {
-		return fmt.Errorf("sign_recover_init: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("sign_recover_init: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -48,7 +48,7 @@ func (o *Object) SignRecover(data []byte) ([]byte, error) {
 		cSigLen C.CK_ULONG
 	)
 	if rv := C.sign_recover(o.fl, o.h, cData(data), C.CK_ULONG(len(data)), &cSig, &cSigLen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("sign_recover: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("sign_recover: 0x%08x : %s", rv, returnValues[rv])
 	}
 	s := C.GoBytes(unsafe.Pointer(cSig), C.int(cSigLen))
 	C.free(unsafe.Pointer(cSig))

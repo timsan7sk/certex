@@ -20,7 +20,7 @@ import "fmt"
 
 func (o Object) setAttributeValue(attrs []C.CK_ATTRIBUTE) error {
 	if rv := C.set_attribute_value(o.fl, o.h, o.o, &attrs[0], C.CK_ULONG(len(attrs))); rv != C.CKR_OK {
-		return fmt.Errorf("setAttributeValue: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("setAttributeValue: 0x%08x : %s", rv, returnValues[rv])
 
 	}
 	return nil

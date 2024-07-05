@@ -22,12 +22,12 @@ import "fmt"
 func (m *Cryptoki) GetSlotList() ([]uint32, error) {
 	var n C.CK_ULONG
 	if rv := C.get_slot_list(m.fl, nil, &n); rv != C.CKR_OK {
-		return nil, fmt.Errorf("get_slot_list: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("get_slot_list: 0x%08x : %s", rv, returnValues[rv])
 	}
 
 	l := make([]C.CK_SLOT_ID, int(n))
 	if rv := C.get_slot_list(m.fl, &l[0], &n); rv != C.CKR_OK {
-		return nil, fmt.Errorf("get_slot_list: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("get_slot_list: 0x%08x : %s", rv, returnValues[rv])
 	}
 	if int(n) > len(l) {
 		return nil, fmt.Errorf("C_GetSlotList returned too many elements, got %d, want %d", int(n), len(l))

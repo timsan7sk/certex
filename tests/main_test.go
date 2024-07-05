@@ -89,11 +89,11 @@ func TestMain(m *testing.M) {
 		fmt.Println("Open slot error: ", err)
 		os.Exit(1)
 	}
-	objs, _ := slot.FindObjects(fPubKey)
-	for _, o := range objs {
-		v, _ := o.Value()
-		fmt.Printf("o.Value: %+v\n", v)
-	}
+	// objs, _ := slot.FindObjects(fPubKey)
+	// for _, o := range objs {
+	// 	v, _ := o.Value()
+	// 	fmt.Printf("o.Value: %+v\n", v)
+	// }
 	m.Run()
 	slot.Close()
 	mod.Close()

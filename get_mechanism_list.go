@@ -34,7 +34,7 @@ func (m *Cryptoki) GetMechanismList(slotID uint) ([]*Mechanism, error) {
 		pulCount       C.CK_ULONG
 	)
 	if rv := C.get_mechanism_list(m.fl, C.CK_ULONG(slotID), &pMechanismList, &pulCount); rv != C.CKR_OK {
-		return nil, fmt.Errorf("GetMechanismList: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("GetMechanismList: 0x%08x : %s", rv, returnValues[rv])
 
 	}
 	ml := make([]*Mechanism, int(pulCount))

@@ -31,7 +31,7 @@ func (o *Object) UnwrapKey(m *Mechanism, wrappedKey []byte, a []*Attribute) (Obj
 	defer mechArena.Free()
 
 	if rv := C.unwrap_key(o.fl, o.h, mech, o.o, C.CK_BYTE_PTR(unsafe.Pointer(&wrappedKey[0])), C.CK_ULONG(len(wrappedKey)), caa, caalen, &key); rv != C.CKR_OK {
-		return Object{}, fmt.Errorf("unwrap_key: 0x%x : %s", rv, returnValues[rv])
+		return Object{}, fmt.Errorf("unwrap_key: 0x%08x : %s", rv, returnValues[rv])
 	}
 	obj, err := o.newObject(key)
 	if err != nil {

@@ -34,7 +34,7 @@ func (o *Object) VerifyInit(m *Mechanism) error {
 	arena, mech := cMechanism(m)
 	defer arena.Free()
 	if rv := C.verify_init(o.fl, o.h, mech, o.o); rv != C.CKR_OK {
-		return fmt.Errorf("verify_init: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("verify_init: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -44,7 +44,7 @@ func (o *Object) VerifyInit(m *Mechanism) error {
 // cannot be recovered from the signature.
 func (o *Object) Verify(data []byte, signature []byte) error {
 	if rv := C.verify(o.fl, o.h, cData(data), C.CK_ULONG(len(data)), cData(signature), C.CK_ULONG(len(signature))); rv != C.CKR_OK {
-		return fmt.Errorf("verify: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("verify: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -54,7 +54,7 @@ func (o *Object) Verify(data []byte, signature []byte) error {
 // and plaintext cannot be recovered from the signature.
 func (o *Object) VerifyUpdate(part []byte) error {
 	if rv := C.verify_update(o.fl, o.h, cData(part), C.CK_ULONG(len(part))); rv != C.CKR_OK {
-		return fmt.Errorf("verify_update: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("verify_update: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -63,7 +63,7 @@ func (o *Object) VerifyUpdate(part []byte) error {
 // operation, checking the signature.
 func (o *Object) VerifyFinal(signature []byte) error {
 	if rv := C.verify_final(o.fl, o.h, cData(signature), C.CK_ULONG(len(signature))); rv != C.CKR_OK {
-		return fmt.Errorf("verify_update: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("verify_update: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }

@@ -24,7 +24,7 @@ func (s *Slot) GetSlotInfo() (*SlotInfo, error) {
 	slotID := C.CK_SLOT_ID(s.id)
 
 	if rv := C.get_slot_info(s.fl, slotID, &cSlotInfo); rv != C.CKR_OK {
-		return nil, fmt.Errorf("get_slot_info: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("get_slot_info: 0x%08x : %s", rv, returnValues[rv])
 	}
 
 	info := SlotInfo{

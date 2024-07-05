@@ -55,7 +55,7 @@ func (o *Object) SignInit(mech *Mechanism) error {
 	var arena, cm = cMechanism(mech)
 	defer arena.Free()
 	if rv := C.sign_init(o.fl, o.h, cm, o.o); rv != C.CKR_OK {
-		return fmt.Errorf("sign_init: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("sign_init: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -66,7 +66,7 @@ func (o *Object) Sign(data []byte) ([]byte, error) {
 	var cSig C.CK_BYTE_PTR
 	var cSigLen C.CK_ULONG
 	if rv := C.sign(o.fl, o.h, cData(data), C.CK_ULONG(len(data)), &cSig, &cSigLen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("sign: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("sign: 0x%08x : %s", rv, returnValues[rv])
 	}
 	s := C.GoBytes(unsafe.Pointer(cSig), C.int(cSigLen))
 	C.free(unsafe.Pointer(cSig))
@@ -78,7 +78,7 @@ func (o *Object) Sign(data []byte) ([]byte, error) {
 func (o *Object) SignUpdate(message []byte) error {
 
 	if rv := C.sign_update(o.fl, o.h, cData(message), C.CK_ULONG(len(message))); rv != C.CKR_OK {
-		return fmt.Errorf("sign_update: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("sign_update: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -89,7 +89,7 @@ func (o *Object) SignFinal() ([]byte, error) {
 	var cSigLen C.CK_ULONG
 
 	if rv := C.sign_final(o.fl, o.h, &cSig, &cSigLen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("sign_final: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("sign_final: 0x%08x : %s", rv, returnValues[rv])
 	}
 	s := C.GoBytes(unsafe.Pointer(cSig), C.int(cSigLen))
 	C.free(unsafe.Pointer(cSig))

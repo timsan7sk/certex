@@ -38,7 +38,7 @@ func (s *Slot) GetOperationState() ([]byte, error) {
 		ulOperationStateLen C.CK_ULONG
 	)
 	if rv := C.get_operation_state(s.fl, s.h, &pOperationState, &ulOperationStateLen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("GetOperationState: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("GetOperationState: 0x%08x : %s", rv, returnValues[rv])
 
 	}
 	defer C.free(unsafe.Pointer(pOperationState))

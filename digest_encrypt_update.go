@@ -37,7 +37,7 @@ func (o *Object) DigestEncryptUpdate(part []byte) ([]byte, error) {
 		encPartLen C.CK_ULONG
 	)
 	if rv := C.digest_encrypt_update(o.fl, o.h, cData(part), C.CK_ULONG(len(part)), encPart, &encPartLen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("digest_encrypt_update: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("digest_encrypt_update: 0x%08x : %s", rv, returnValues[rv])
 	}
 	d := C.GoBytes(unsafe.Pointer(encPart), C.int(encPartLen))
 	C.free(unsafe.Pointer(encPart))

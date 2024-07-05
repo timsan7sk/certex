@@ -21,7 +21,7 @@ import "fmt"
 // Destroys an object.
 func (o *Object) DestroyObject() error {
 	if rv := C.destroy_object(o.fl, o.h, o.o); rv != C.CKR_OK {
-		return fmt.Errorf("DestroyObject: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("DestroyObject: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }

@@ -27,7 +27,7 @@ import (
 
 func (o Object) getAttributeValue(attrs []C.CK_ATTRIBUTE) error {
 	if rv := C.get_attribute_value(o.fl, o.h, o.o, &attrs[0], C.CK_ULONG(len(attrs))); rv != C.CKR_OK {
-		return fmt.Errorf("getAttributeValue: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("getAttributeValue: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -37,7 +37,7 @@ func (o Object) GetAttributeValue(attrs []*Attribute) ([]*Attribute, error) {
 		cAttrs[i]._type = C.CK_ATTRIBUTE_TYPE(attrs[i].Type)
 	}
 	if rv := C.get_attribute_value(o.fl, o.h, o.o, &cAttrs[0], C.CK_ULONG(len(attrs))); rv != C.CKR_OK {
-		return nil, fmt.Errorf("get_attribute_value: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("get_attribute_value: 0x%08x : %s", rv, returnValues[rv])
 	}
 	pAttrs := make([]*Attribute, len(attrs))
 	for i, c := range cAttrs {
@@ -62,7 +62,7 @@ func (s *p) newObject(oh C.CK_OBJECT_HANDLE) (Object, error) {
 	}
 
 	if rv := C.get_attribute_value(s.fl, s.h, oh, &a[0], C.CK_ULONG(len(a))); rv != C.CKR_OK {
-		return Object{}, fmt.Errorf("newObject: 0x%x : %s", rv, returnValues[rv])
+		return Object{}, fmt.Errorf("newObject: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return Object{p{fl: s.fl, h: s.h}, oh, *objClass}, nil
 }

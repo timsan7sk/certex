@@ -20,7 +20,7 @@ import "fmt"
 
 func (s *Slot) logout() error {
 	if rv := C.logout(s.fl, s.h); rv != C.CKR_OK {
-		return fmt.Errorf("logout: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("logout: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }

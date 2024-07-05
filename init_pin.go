@@ -25,7 +25,7 @@ func (s *Slot) initPIN(pin string) error {
 	cPIN := ckString(pin)
 	cPINLen := C.CK_ULONG(len(cPIN))
 	if rv := C.init_pin(s.fl, s.h, &cPIN[0], cPINLen); rv != C.CKR_OK {
-		return fmt.Errorf("initPIN: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("initPIN: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }

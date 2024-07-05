@@ -33,7 +33,7 @@ func getFunctionList(pLib unsafe.Pointer, p C.CK_FUNCTION_LIST_PTR) (C.CK_FUNCTI
 	// fmt.Printf("CK_FUNCTION_LIST: %+v\n", p)
 	if rv != C.CKR_OK {
 		C.dlclose(pLib)
-		return nil, fmt.Errorf("get_function_list: %s, rv: 0x%x", returnValues[rv], rv)
+		return nil, fmt.Errorf("get_function_list: %s, rv: 0x%08x", returnValues[rv], rv)
 	}
 
 	return p, nil

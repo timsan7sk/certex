@@ -25,7 +25,7 @@ func (s *Slot) CreateObject(attrs []*Attribute) (Object, error) {
 	arena, cAttrs, ulCount := cAttribute(attrs)
 	defer arena.Free()
 	if rv := C.create_object(s.fl, s.h, cAttrs, ulCount, &hObject); rv != C.CKR_OK {
-		return Object{}, fmt.Errorf("CreateObject: 0x%x : %s", rv, returnValues[rv])
+		return Object{}, fmt.Errorf("CreateObject: 0x%08x : %s", rv, returnValues[rv])
 	}
 	o, err := s.newObject(hObject)
 	if err != nil {

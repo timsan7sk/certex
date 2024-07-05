@@ -24,7 +24,7 @@ func initialize(p C.CK_FUNCTION_LIST_PTR) error {
 	}
 	rv := C.initialize(p, &args)
 	if rv != C.CKR_OK {
-		return fmt.Errorf("initialize: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("initialize: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }

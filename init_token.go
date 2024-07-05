@@ -46,7 +46,7 @@ func (m *Cryptoki) InitToken(id uint32, opts SlotOptions) error {
 	cPINLen := C.CK_ULONG(len(cPIN))
 
 	if rv := C.init_token(m.fl, C.CK_SLOT_ID(id), &cPIN[0], cPINLen, &cLabel[0]); rv != C.CKR_OK {
-		return fmt.Errorf("init_token: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("init_token: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }

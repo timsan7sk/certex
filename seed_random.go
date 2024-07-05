@@ -23,7 +23,7 @@ import (
 
 func (s *Slot) SeedRandom(seed []byte) error {
 	if rv := C.seed_random(s.fl, s.h, C.CK_BYTE_PTR(unsafe.Pointer(&seed[0])), C.CK_ULONG(len(seed))); rv != C.CKR_OK {
-		return fmt.Errorf("SeedRandom: 0x%x", rv)
+		return fmt.Errorf("SeedRandom: 0x%08x", rv)
 	}
 	return nil
 }

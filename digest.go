@@ -56,7 +56,7 @@ func (o *Object) DigestInit(m *Mechanism) error {
 	arena, mech := cMechanism(m)
 	defer arena.Free()
 	if rv := C.digest_init(o.fl, o.h, mech); rv != C.CKR_OK {
-		return fmt.Errorf("digest_init: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("digest_init: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -68,7 +68,7 @@ func (o *Object) Digest(message []byte) ([]byte, error) {
 		hashlen C.CK_ULONG
 	)
 	if rv := C.digest(o.fl, o.h, cData(message), C.CK_ULONG(len(message)), &hash, &hashlen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("digest: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("digest: 0x%08x : %s", rv, returnValues[rv])
 
 	}
 	h := C.GoBytes(unsafe.Pointer(hash), C.int(hashlen))
@@ -79,7 +79,7 @@ func (o *Object) Digest(message []byte) ([]byte, error) {
 // Continues a multiple-part message-digesting operation.
 func (o *Object) DigestUpdate(message []byte) error {
 	if rv := C.digest_update(o.fl, o.h, cData(message), C.CK_ULONG(len(message))); rv != C.CKR_OK {
-		return fmt.Errorf("digest_update: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("digest_update: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }
@@ -89,7 +89,7 @@ func (o *Object) DigestUpdate(message []byte) error {
 // the data already digested.
 func (o *Object) DigestKey() error {
 	if rv := C.digest_key(o.fl, o.h, o.o); rv != C.CKR_OK {
-		return fmt.Errorf("digest_key: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("digest_key: 0x%08x : %s", rv, returnValues[rv])
 
 	}
 	return nil
@@ -102,7 +102,7 @@ func (o *Object) DigestFinal() ([]byte, error) {
 		hashlen C.CK_ULONG
 	)
 	if rv := C.digest_final(o.fl, o.h, &hash, &hashlen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("digest_final: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("digest_final: 0x%08x : %s", rv, returnValues[rv])
 	}
 
 	h := C.GoBytes(unsafe.Pointer(hash), C.int(hashlen))

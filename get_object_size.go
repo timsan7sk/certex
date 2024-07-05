@@ -22,7 +22,7 @@ import "fmt"
 func (o *Object) GetObjectSize() (uint, error) {
 	var size C.CK_ULONG
 	if rv := C.get_object_size(o.fl, o.h, o.o, &size); rv != C.CKR_OK {
-		return 0, fmt.Errorf("GetObjectSize: 0x%x : %s", rv, returnValues[rv])
+		return 0, fmt.Errorf("GetObjectSize: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return uint(size), nil
 }

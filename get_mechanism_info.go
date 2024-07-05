@@ -24,7 +24,7 @@ func (m *Cryptoki) GetMechanismInfo(slotID uint32, mech *Mechanism) (MechanismIn
 	defer arena.Free()
 	var pInfo C.CK_MECHANISM_INFO
 	if rv := C.get_mechanism_info(m.fl, C.CK_ULONG(slotID), C.CK_MECHANISM_TYPE(cm.mechanism), C.CK_MECHANISM_INFO_PTR(&pInfo)); rv != C.CKR_OK {
-		return MechanismInfo{}, fmt.Errorf("get_mechanism_info: 0x%x : %s", rv, returnValues[rv])
+		return MechanismInfo{}, fmt.Errorf("get_mechanism_info: 0x%08x : %s", rv, returnValues[rv])
 	}
 	mi := MechanismInfo{
 		MinKeySize: uint(pInfo.ulMinKeySize),

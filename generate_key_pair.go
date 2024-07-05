@@ -32,7 +32,7 @@ func (s *Slot) GenerateKeyPair(m *Mechanism, public, private []*Attribute) (Obje
 	mechArena, mech := cMechanism(m)
 	defer mechArena.Free()
 	if rv := C.generate_key_pair(s.fl, s.h, mech, pub, publen, priv, privlen, C.CK_OBJECT_HANDLE_PTR(&pubKey), C.CK_OBJECT_HANDLE_PTR(&privKey)); rv != C.CKR_OK {
-		return Object{}, Object{}, fmt.Errorf("generate_key_pair: 0x%x : %s", rv, returnValues[rv])
+		return Object{}, Object{}, fmt.Errorf("generate_key_pair: 0x%08x : %s", rv, returnValues[rv])
 	}
 	publicKey, _ := s.newObject(pubKey)
 	privateKey, _ := s.newObject(privKey)

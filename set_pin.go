@@ -31,7 +31,7 @@ func (s *Slot) SetPIN(oldPIN, newPIN string) error {
 	new := C.CString(newPIN)
 	defer C.free(unsafe.Pointer(new))
 	if rv := C.set_pin(s.fl, s.h, old, C.CK_ULONG(len(oldPIN)), new, C.CK_ULONG(len(newPIN))); rv != C.CKR_OK {
-		return fmt.Errorf("SetPIN: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("SetPIN: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }

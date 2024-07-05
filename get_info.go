@@ -23,7 +23,7 @@ import (
 func getInfo(p C.CK_FUNCTION_LIST_PTR) (C.CK_INFO, error) {
 	var info C.CK_INFO
 	if rv := C.get_info(p, &info); rv != C.CKR_OK {
-		return info, fmt.Errorf("getInfo: 0x%x : %s - dlerror: %s", rv, returnValues[rv], C.GoString(C.dlerror()))
+		return info, fmt.Errorf("getInfo: 0x%08x : %s - dlerror: %s", rv, returnValues[rv], C.GoString(C.dlerror()))
 	}
 	return info, nil
 }

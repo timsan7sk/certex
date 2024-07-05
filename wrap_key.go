@@ -40,7 +40,7 @@ func (o *Object) WrapKey(m *Mechanism, key Object) ([]byte, error) {
 	arena, mech := cMechanism(m)
 	defer arena.Free()
 	if rv := C.wrap_key(o.fl, o.h, mech, o.o, key.o, &wrappedKey, &wrappedKeyLen); rv != C.CKR_OK {
-		return nil, fmt.Errorf("wrap_key: 0x%x : %s", rv, returnValues[rv])
+		return nil, fmt.Errorf("wrap_key: 0x%08x : %s", rv, returnValues[rv])
 	}
 	k := C.GoBytes(unsafe.Pointer(wrappedKey), C.int(wrappedKeyLen))
 	C.free(unsafe.Pointer(wrappedKey))

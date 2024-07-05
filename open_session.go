@@ -31,7 +31,7 @@ func (m *Cryptoki) openSession(id uint32, opts Options) (C.CK_SESSION_HANDLE, er
 		flags = flags | C.CKF_RW_SESSION
 	}
 	if rv := C.open_session(m.fl, C.CK_SLOT_ID(id), flags, &hSession); rv != C.CKR_OK {
-		return hSession, fmt.Errorf("openSession: 0x%x : %s", rv, returnValues[rv])
+		return hSession, fmt.Errorf("openSession: 0x%08x : %s", rv, returnValues[rv])
 	}
 
 	return hSession, nil

@@ -24,7 +24,7 @@ import (
 
 func (s *Slot) SetOperationState(operationState []byte, hEncryptionKey, hAuthenticationKey C.CK_OBJECT_HANDLE) error {
 	if rv := C.set_operation_state(s.fl, s.h, C.CK_BYTE_PTR(unsafe.Pointer(&operationState[0])), C.CK_ULONG(len(operationState)), hEncryptionKey, hAuthenticationKey); rv != C.CKR_OK {
-		return fmt.Errorf("SetOperationState: 0x%x : %s", rv, returnValues[rv])
+		return fmt.Errorf("SetOperationState: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return nil
 }

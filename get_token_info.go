@@ -24,7 +24,7 @@ import (
 func (s *Slot) GetTokenInfo() (TokenInfo, error) {
 	var cTokenInfo C.CK_TOKEN_INFO
 	if rv := C.get_token_info(s.fl, C.CK_SLOT_ID(s.id), &cTokenInfo); rv != C.CKR_OK {
-		return TokenInfo{}, fmt.Errorf("GetTokenInfo: 0x%x : %s", rv, returnValues[rv])
+		return TokenInfo{}, fmt.Errorf("GetTokenInfo: 0x%08x : %s", rv, returnValues[rv])
 	}
 	r := TokenInfo{
 		Label:              toString(cTokenInfo.label[:]),
@@ -59,7 +59,7 @@ func (s *Slot) GetTokenInfo() (TokenInfo, error) {
 func (s *Slot) getTokenInfo() (C.CK_TOKEN_INFO, error) {
 	var cTokenInfo C.CK_TOKEN_INFO
 	if rv := C.get_token_info(s.fl, C.CK_SLOT_ID(s.id), &cTokenInfo); rv != C.CKR_OK {
-		return C.CK_TOKEN_INFO{}, fmt.Errorf("GetTokenInfo: 0x%x : %s", rv, returnValues[rv])
+		return C.CK_TOKEN_INFO{}, fmt.Errorf("GetTokenInfo: 0x%08x : %s", rv, returnValues[rv])
 	}
 	return cTokenInfo, nil
 }

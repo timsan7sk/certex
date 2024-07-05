@@ -63,12 +63,12 @@ func (s *Slot) FindObjects(opts Filter) (objs []Object, err error) {
 		rv = C.find_objects_init(s.fl, s.h, nil, 0)
 	}
 	if rv != C.CKR_OK {
-		err = fmt.Errorf("find_objects_init: 0x%x : %s", rv, returnValues[rv])
+		err = fmt.Errorf("find_objects_init: 0x%08x : %s", rv, returnValues[rv])
 		return nil, err
 	}
 	defer func() {
 		if rv := C.find_objects_final(s.fl, s.h); rv != C.CKR_OK && err == nil {
-			err = fmt.Errorf("find_objects_final: 0x%x : %s", rv, returnValues[rv])
+			err = fmt.Errorf("find_objects_final: 0x%08x : %s", rv, returnValues[rv])
 		}
 	}()
 	var handles []C.CK_OBJECT_HANDLE
@@ -81,7 +81,7 @@ func (s *Slot) FindObjects(opts Filter) (objs []Object, err error) {
 
 		if rv := C.find_objects(s.fl, s.h, &cObjHandles[0], cObjMax, &n); rv != C.CKR_OK {
 
-			err = fmt.Errorf("find_objects: 0x%x : %s", rv, returnValues[rv])
+			err = fmt.Errorf("find_objects: 0x%08x : %s", rv, returnValues[rv])
 			return nil, err
 		}
 		if n == 0 {
