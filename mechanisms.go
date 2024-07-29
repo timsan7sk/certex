@@ -13,8 +13,6 @@ package certex
 */
 import "C"
 
-const CERTEX_DEF_BASE = uint(0x8E000000)
-
 /* Available Certext Mechanisms */
 var Mechanisms = map[string]uint{
 	/* RSA */

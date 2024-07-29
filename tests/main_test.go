@@ -8,9 +8,10 @@ import (
 )
 
 const (
+	algID   = 21
 	libName = "libcertex-rcsp_r.so.1"
 	// Путь до конфига
-	confPath = "/home/timsan/Sources/Golang/Certex/rcsp.conf"
+	confPath = "/home/timsan/Sources/Golang/certex/rcsp.conf"
 	// testAdminPIN = ""
 	testPIN    = "25032016"
 	testSlotID = 0
@@ -22,32 +23,34 @@ const (
 var (
 	pubKeyAttrs = []*certex.Attribute{
 		certex.NewAttribute(certex.CKA_CLASS, certex.CKO_PUBLIC_KEY),
-		certex.NewAttribute(certex.CKA_KEY_TYPE, certex.CKK_GOSTR3410),
-		certex.NewAttribute(certex.CKA_ID, "TIMSAN_GOST_TEST_KEY"),
-		certex.NewAttribute(certex.CKA_LABEL, "TIMSAN_GOST_TEST_KEY"),
+		certex.NewAttribute(certex.CKA_LABEL, "TIMSAN_GOST_TEST_KEY_LABEL"),
+		certex.NewAttribute(certex.CKA_ID, "TIMSAN_GOST_TEST_KEY_ID"),
+		certex.NewAttribute(certex.CKA_KEY_TYPE, certex.CKK_CERTEX_RDS),
+		certex.NewAttribute(certex.CKA_VERIFY, true),
 		certex.NewAttribute(certex.CKA_TOKEN, false),
-		// certex.NewAttribute(certex.CKA_PRIVATE, false),
+		certex.NewAttribute(certex.CKA_PRIVATE, false),
+		certex.NewAttribute(certex.CKA_CERTEX_RDS_TYPE, algID),
 		// certex.NewAttribute(certex.CKA_ENCRYPT, true),
-		// certex.NewAttribute(certex.CKA_VERIFY, true),
 		// certex.NewAttribute(certex.CKA_VERIFY_RECOVER, true),
-		certex.NewAttribute(certex.CKA_GOSTR3410_PARAMS, []byte{0x06, 0x07, 0x2a, 0x85, 0x03, 0x02, 0x02, 0x23, 0x00}),
-		certex.NewAttribute(certex.CKA_GOSTR3411_PARAMS, []byte{0x06, 0x08, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x02}),
+		// certex.NewAttribute(certex.CKA_GOSTR3410_PARAMS, []byte{0x06, 0x07, 0x2a, 0x85, 0x03, 0x02, 0x02, 0x23, 0x00}),
+		// certex.NewAttribute(certex.CKA_GOSTR3411_PARAMS, []byte{0x06, 0x08, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x02}),
 		// certex.NewAttribute(certex.CKA_VALUE, []byte{}),
 		// certex.NewAttribute(certex.CKA_VALUE_LEN, 64),
 	}
 	privKeyAttrs = []*certex.Attribute{
 		certex.NewAttribute(certex.CKA_CLASS, certex.CKO_PRIVATE_KEY),
-		certex.NewAttribute(certex.CKA_KEY_TYPE, certex.CKK_GOSTR3410),
-		certex.NewAttribute(certex.CKA_ID, "TIMSAN_GOST_TEST_KEY"),
-		certex.NewAttribute(certex.CKA_LABEL, "TIMSAN_GOST_TEST_KEY"),
+		certex.NewAttribute(certex.CKA_LABEL, "TIMSAN_GOST_TEST_KEY_LABEL"),
+		certex.NewAttribute(certex.CKA_ID, "TIMSAN_GOST_TEST_KEY_ID"),
+		certex.NewAttribute(certex.CKA_KEY_TYPE, certex.CKK_CERTEX_RDS),
 		certex.NewAttribute(certex.CKA_TOKEN, false),
-		// certex.NewAttribute(certex.CKA_PRIVATE, false),
+		certex.NewAttribute(certex.CKA_SIGN, true),
+		certex.NewAttribute(certex.CKA_PRIVATE, true),
+		certex.NewAttribute(certex.CKA_CERTEX_RDS_TYPE, algID),
 		// certex.NewAttribute(certex.CKA_DECRYPT, true),
 		// certex.NewAttribute(certex.CKA_DERIVE, true),
-		// certex.NewAttribute(certex.CKA_SIGN, true),
 		// certex.NewAttribute(certex.CKA_SIGN_RECOVER, true),
-		certex.NewAttribute(certex.CKA_GOSTR3410_PARAMS, []byte{0x06, 0x07, 0x2a, 0x85, 0x03, 0x02, 0x02, 0x23, 0x00}),
-		certex.NewAttribute(certex.CKA_GOSTR3411_PARAMS, []byte{0x06, 0x08, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x02}),
+		// certex.NewAttribute(certex.CKA_GOSTR3410_PARAMS, []byte{0x06, 0x07, 0x2a, 0x85, 0x03, 0x02, 0x02, 0x23, 0x00}),
+		// certex.NewAttribute(certex.CKA_GOSTR3411_PARAMS, []byte{0x06, 0x08, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x02}),
 		// certex.NewAttribute(certex.CKA_VALUE, []byte{}),
 		// certex.NewAttribute(certex.CKA_VALUE_LEN, 64),
 	}
