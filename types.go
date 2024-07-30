@@ -134,7 +134,7 @@ func (o Object) Attribute(attributeType uint) ([]byte, error) {
 		return nil, fmt.Errorf("Attribute not found")
 	}
 	if len(attrs) > 1 {
-		return nil, fmt.Errorf("Too many attributes found")
+		return nil, fmt.Errorf("too many attributes found")
 	}
 	return attrs[0].Value, nil
 }

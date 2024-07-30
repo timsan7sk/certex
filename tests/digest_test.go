@@ -6,16 +6,13 @@ import (
 
 func digestTest(t *testing.T) []byte {
 	var d []byte
-	pub, priv := generateKeyPairTest(t)
-	if err := priv.DigestInit(mechDigGOST); err != nil {
+	if err := testPrivKey.DigestInit(mechDigGOST); err != nil {
 		t.Fatal(err)
 	} else {
-		if d, err = priv.Digest(testData); err != nil {
+		if d, err = testPrivKey.Digest(testData); err != nil {
 			t.Fatal(err)
 		}
 	}
-	_ = pub.DestroyObject()
-	_ = priv.DestroyObject()
 	return d
 }
 
