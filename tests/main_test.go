@@ -65,7 +65,7 @@ var (
 		certex.NewAttribute(certex.CKA_VALUE_LEN, 16),
 	}
 	mechKeyGenAES   = certex.NewMechanism(certex.CKM_AES_KEY_GEN)
-	mechPairGenGOST = certex.NewMechanism(certex.CKM_CERTEX_GOSTR3410_2001_KEY_PAIR_GEN)
+	mechPairGenGOST = certex.NewMechanism(certex.CKM_CERTEX_GOSTR3410_2012_KEY_PAIR_GEN)
 	// mechGOST        = certex.NewMechanism(certex.CKM_RSA_PKCS)
 	mechDigGOST = certex.NewMechanism(certex.CKM_CERTEX_GOSTR3411_2012_64)
 	mechSigGOST = certex.NewMechanism(certex.CKM_CERTEX_GOSTR3410_2012)

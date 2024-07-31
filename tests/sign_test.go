@@ -19,23 +19,20 @@ func signTest(t *testing.T, d []byte) []byte {
 }
 func signUpdateTest(t *testing.T, d []byte) []byte {
 	var s []byte
-	pub, priv := generateKeyPairTest(t)
-	if err := priv.SignInit(mechSigGOST); err != nil {
+	if err := testPrivKey.SignInit(mechSigGOST); err != nil {
 		t.Fatal(err)
 	} else {
 		for i := 0; i < 3; i++ {
-			if err := priv.SignUpdate(d); err != nil {
+			if err := testPrivKey.SignUpdate(d); err != nil {
 				t.Fatal(err)
 			}
 		}
-		if c, err := priv.SignFinal(); err != nil {
+		if c, err := testPrivKey.SignFinal(); err != nil {
 			t.Fatal(err)
 		} else {
 			s = c
 		}
 	}
-	_ = pub.DestroyObject()
-	_ = priv.DestroyObject()
 	return s
 }
 func TestSign(t *testing.T) {
