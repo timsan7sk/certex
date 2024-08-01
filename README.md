@@ -1,5 +1,5 @@
-|![Scheme](images/nca_icon.png)|### Go wrapper for the [Gamma Technologies](https://gamma.kz/) Cryptoki(PKCS#11) library of Certex HSM ###|
-|:----------------------------:|:---------------------------------------------------------------------------------------------------------|
+|![Scheme](images/nca_icon.png)| **Go wrapper for the [Gamma Technologies](https://gamma.kz/) Cryptoki(PKCS#11) library of Certex HSM** |
+|:----------------------------:|:-------------------------------------------------------------------------------------------------------|
 
 #### Example ####
 ```go
