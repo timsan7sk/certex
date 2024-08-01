@@ -86,6 +86,9 @@ func TestMain(m *testing.M) {
 		fmt.Println("Open module error: ", err)
 		os.Exit(1)
 	}
+	mod.Lock()
+	defer mod.Unlock()
+
 	opts := certex.Options{
 		PIN:       testPIN,
 		ReadWrite: true,

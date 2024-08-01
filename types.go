@@ -16,6 +16,7 @@ package certex
 import "C"
 import (
 	"fmt"
+	"sync"
 	"unsafe"
 )
 
@@ -73,6 +74,7 @@ type Cryptoki struct {
 	mod unsafe.Pointer
 	// List of C functions provided by the module.
 	fl C.CK_FUNCTION_LIST_PTR
+	mu sync.Mutex
 	// Version of the module, used for compatibility.
 	version C.CK_VERSION
 	// Holds global information about the module.

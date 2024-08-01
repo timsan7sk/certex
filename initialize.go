@@ -16,10 +16,22 @@ CK_RV initialize(CK_FUNCTION_LIST_PTR fl, CK_C_INITIALIZE_ARGS_PTR pInitArgs) {
 }
 */
 import "C"
-import "fmt"
+import (
+	"fmt"
+)
 
 func initialize(p C.CK_FUNCTION_LIST_PTR) error {
+	// var cm C.CK_CREATEMUTEX
+	// var dm C.CK_DESTROYMUTEX
+	// var lm C.CK_LOCKMUTEX
+	// var um C.CK_UNLOCKMUTEX
+	// var pr C.CK_VOID_PTR
 	args := C.CK_C_INITIALIZE_ARGS{
+		// CreateMutex:  cm,
+		// DestroyMutex: dm,
+		// LockMutex:    lm,
+		// UnlockMutex:  um,
+		// pReserved:    pr,
 		flags: C.CKF_OS_LOCKING_OK,
 	}
 	rv := C.initialize(p, &args)
