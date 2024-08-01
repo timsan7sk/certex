@@ -1,14 +1,42 @@
-![Scheme](images/nca_icon.png)
+|![Scheme](images/nca_icon.png)|### Go wrapper for the [Gamma Technologies](https://gamma.kz/) Cryptoki(PKCS#11) library of Certex HSM ###|
+|:----------------------------:|:---------------------------------------------------------------------------------------------------------|
 
-### Go wrapper for the [Gamma Technologies](https://gamma.kz/) Cryptoki(PKCS#11) library of Certex HSM ###
+#### Example ####
+```go
+const (
+    // Library file name
+    libName = "libcertex-rcsp_r.so.1"
+	// Path to the configuration file
+	confPath = "/etc/rcsp.conf"
+    // PIN Code of HSM (bad practice, don't do that in production code)
+    PIN    = "25032016"
+    // Slot identificator
+	slotID = 0
+)
+func init() {
+	mod, err = certex.Open(libName, confPath)
+	if err != nil {
+		fmt.Println("Open module error: ", err)
+		os.Exit(1)
+	}
+	mod.Lock()
+	defer mod.Unlock()
 
+	opts := certex.Options{
+		PIN:       PIN,
+		ReadWrite: true,
+	}
+	slot, err = mod.Slot(slotID, opts)
+	if err != nil {
+		fmt.Println("Open slot error: ", err)
+		os.Exit(1)
+	}
+    info, _ := slot.GetSlotInfo()
+    fmt.Printf("Slot Info: %+v\n", info)
+}
+
+```
 #### Functionality ####
-- Open/Close
-- 
-- 
-- 
--
-
 | CK_FUNCTION_LIST:      | C | Go | Test | Comment|
 |:-----------------------|:-:|:--:|:----:|:-----------------------------------------------------------------------------------------------------------------------------------------|
 | connect                | + | +  | +    | Connectiong to the Certex HSM|
