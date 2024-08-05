@@ -1,13 +1,5 @@
 |[![Scheme](images/nca_icon.png)](https://pki.gov.kz/)| **Go wrapper for the [Gamma Technologies](https://gamma.kz/) Cryptoki(PKCS#11) library of Certex HSM** |
 |:---------------------------------------------------:|:-------------------------------------------------------------------------------------------------------|
-#### Simple chart #####
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-```
 
 #### Example ####
 ```go
