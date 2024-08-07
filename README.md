@@ -1,6 +1,24 @@
 |[![Scheme](images/nca_icon.png)](https://pki.gov.kz/)| **Go wrapper for the [Gamma Technologies](https://gamma.kz/) Cryptoki(PKCS#11) library of Certex HSM** |
 |:---------------------------------------------------:|:-------------------------------------------------------------------------------------------------------|
 
+#### Functionality ####
+Certex HSM provides the following cryptographic functions:
+- Generation of cryptographic keys, encryption and decryption using the  algorithm:
+	- GOST 28147-89 – 256 bit.
+
+- Generation of cryptographic keys, signing and verification of signatures using algorithms:
+	- ST RK GOST R 34.10–2015 – 512 bit;
+	- RSA – 4096 bit;
+	- ECDSA – 384-512 bit;
+	- GOST 34.310-2004 – 256 bit.
+
+- Digesting(Hashing) data using algorithms:
+	- ST RK GOST R 34.11–2015 – 512 bit;
+	- SHA2 – 256-512 bit;
+	- GOST 34.311-95 – 256 bit.
+
+- Simulated data protection using an algorithm:
+	- GOST 28147-89 – 64 bit.
 #### Example ####
 ```go
 const (
@@ -36,7 +54,6 @@ func init() {
 }
 
 ```
-#### Functionality ####
 | CK_FUNCTION_LIST:      | C | Go | Test | Comment|
 |:-----------------------|:-:|:--:|:----:|:-----------------------------------------------------------------------------------------------------------------------------------------|
 | connect                | + | +  | +    | Connectiong to the Certex HSM|
