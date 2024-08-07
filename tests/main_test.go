@@ -74,7 +74,6 @@ var (
 		certex.NewAttribute(certex.CKA_DECRYPT, true),
 		certex.NewAttribute(certex.CKA_SENSITIVE, true),
 		certex.NewAttribute(certex.CKA_EXTRACTABLE, true),
-		certex.NewAttribute(certex.CKA_VALUE_LEN, 16),
 	}
 	mechKeyGenAES   = certex.NewMechanism(certex.CKM_AES_KEY_GEN)
 	mechPairGenGOST = certex.NewMechanism(certex.CKM_CERTEX_GOSTR3410_2012_KEY_PAIR_GEN)
@@ -89,6 +88,7 @@ var (
 	slot        *certex.Slot
 	testPubKey  certex.Object
 	testPrivKey certex.Object
+	testSecKey  certex.Object
 )
 
 func TestMain(m *testing.M) {
@@ -115,9 +115,15 @@ func TestMain(m *testing.M) {
 		fmt.Println("Generate Key Pair error: ", err)
 		os.Exit(1)
 	}
+	testSecKey, err = slot.GenerateKey(mechKeyGenAES, secKeyAttrs)
+	if err != nil {
+		fmt.Println("Generate Key Pair error: ", err)
+		os.Exit(1)
+	}
 	m.Run()
 	_ = testPubKey.DestroyObject()
 	_ = testPrivKey.DestroyObject()
+	_ = testSecKey.DestroyObject()
 	slot.Close()
 	mod.Close()
 }
