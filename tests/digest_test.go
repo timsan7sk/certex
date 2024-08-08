@@ -4,8 +4,7 @@ import (
 	"testing"
 )
 
-func digestTest(t *testing.T) []byte {
-	var d []byte
+func digestTest(t *testing.T) (d []byte) {
 	if err := testPrivKey.DigestInit(mechDigGOST); err != nil {
 		t.Fatal(err)
 	} else {
@@ -16,8 +15,7 @@ func digestTest(t *testing.T) []byte {
 	return d
 }
 
-func digestUpdateTest(t *testing.T) []byte {
-	var d []byte
+func digestUpdateTest(t *testing.T) (d []byte) {
 	if err := testPrivKey.DigestInit(mechDigGOST); err != nil {
 		t.Fatal(err)
 	} else {
