@@ -117,7 +117,7 @@ func init() {
 | C_DecryptVerifyUpdate: | + | +  | -    | Continues a multiple-part decryption and verify operation.|
 | C_GenerateKey:         | + | +  | +    | Generates a secret key, creating a new key object.|
 | C_GenerateKeyPair:     | + | +  | +    | Generates a public-key/private-key pair, creating new key objects.|
-| C_WrapKey:             | + | +  | -    | Wraps (i.e., encrypts) a key.|
+| C_WrapKey:             | + | +  | +    | Wraps (i.e., encrypts) a key.|
 | C_UnwrapKey:           | + | +  | -    | Unwraps (decrypts) a wrapped key, creating a new key object.|
 | C_DeriveKey:           | + | +  | +    | Derives a key from a base key, creating a new key object.|
 | C_SeedRandom:          | + | +  | +    | Mixes additional seed material into the token's random number generator.|
