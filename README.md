@@ -1,4 +1,4 @@
-|[![Scheme](images/nca_icon.png)](https://pki.gov.kz/)| **Go wrapper for the [Gamma Technologies](https://gamma.kz/) Cryptoki(PKCS#11) library of Certex HSM** |
+|[![Scheme](./images/nca_icon.png)](https://pki.gov.kz/)| **Go wrapper for the [Gamma Technologies](https://gamma.kz/) Cryptoki(PKCS#11) library of Certex HSM** |
 |:---------------------------------------------------:|:-------------------------------------------------------------------------------------------------------|
 
 #### Functionality ####
@@ -19,7 +19,9 @@ Certex HSM provides the following cryptographic functions:
 
 - Simulated data protection using an algorithm:
 	- GOST 28147-89 – 64 bit.
+
 #### Example ####
+
 ```go
 const (
     // Library file name
@@ -54,6 +56,7 @@ func init() {
 }
 
 ```
+
 | CK_FUNCTION_LIST:      | C | Go | Test | Comment|
 |:-----------------------|:-:|:--:|:----:|:-----------------------------------------------------------------------------------------------------------------------------------------|
 | connect                | + | +  | +    | Connectiong to the Certex HSM|
