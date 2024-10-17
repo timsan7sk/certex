@@ -1,8 +1,9 @@
 package tests
 
 import (
-	"certex"
 	"testing"
+
+	"pki.gov.kz/go/certex"
 )
 
 func generateKeyPairTest(t *testing.T) (certex.Object, certex.Object) {

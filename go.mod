@@ -1,3 +1,3 @@
-module certex
+module pki.gov.kz/go/certex
 
-go 1.22.2
+go 1.22.5

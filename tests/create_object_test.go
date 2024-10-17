@@ -1,8 +1,9 @@
 package tests
 
 import (
-	"certex"
 	"testing"
+
+	"pki.gov.kz/go/certex"
 )
 
 func createObjectTest(t *testing.T) certex.Object {

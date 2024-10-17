@@ -1,10 +1,11 @@
 package tests
 
 import (
-	"certex"
 	"fmt"
 	"os"
 	"testing"
+
+	"pki.gov.kz/go/certex"
 )
 
 const (
