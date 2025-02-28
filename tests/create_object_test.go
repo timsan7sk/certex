@@ -17,8 +17,7 @@ func createObjectTest(t *testing.T) certex.Object {
 
 func TestCreateObject(t *testing.T) {
 	o := createObjectTest(t)
-	err := o.DestroyObject()
-	if err != nil {
+	if err := o.DestroyObject(); err != nil {
 		t.Fatal(err)
 	}
 }

@@ -154,7 +154,7 @@ func cData(data []byte) (pData C.CK_BYTE_PTR) {
 // Note that this is merely a convenience function, as values returned
 // from the HSM are not converted back to Go values, those are just raw
 // byte slices.
-func NewAttribute(t uint, x interface{}) *Attribute {
+func NewAttribute(t uint, x any) *Attribute {
 	// This function nicely transforms *to* an attribute, but there is
 	// no corresponding function that transform back *from* an attribute,
 	// which in PKCS#11 is just an byte array.
