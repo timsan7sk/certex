@@ -13,7 +13,7 @@ const (
 	// algID   = 21 // 94/2001
 	libName = "libcertex-rcsp_r.so.1"
 	// Путь до конфига
-	confPath = "/home/timsan/Sources/Golang/certex/rcsp.conf"
+	confPath = "/etc/rcsp.conf"
 	// testAdminPIN = ""
 	testPIN    = "25032016"
 	testSlotID = 0
