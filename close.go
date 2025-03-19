@@ -11,7 +11,7 @@ package certex
 #include "./headers/pkcs11t.h"
 #include "./headers/PKICertexHSM.h"
 
-CK_RV finalize(CK_FUNCTION_LIST_PTR fl) {
+CK_RV final(CK_FUNCTION_LIST_PTR fl) {
 	return (*fl->C_Finalize)(NULL_PTR);
 }
 CK_RV close_session(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession) {
@@ -25,7 +25,7 @@ import "C"
 import "fmt"
 
 func (m *Cryptoki) Close() error {
-	rv := C.finalize(m.fl)
+	rv := C.final(m.fl)
 	if rv != C.CKR_OK {
 		// fmt.Printf("finalize: 0x%08x\n", rv)
 		return fmt.Errorf("finalize: 0x%08x : %s", rv, returnValues[rv])
