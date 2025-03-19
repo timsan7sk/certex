@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	"pki.gov.kz/go/certex"
+	"github.com/timsan7sk/certex"
 )
 
 func TestEncrypt(t *testing.T) {

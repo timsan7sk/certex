@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"pki.gov.kz/go/certex"
+	"github.com/timsan7sk/certex"
 )
 
 const (
