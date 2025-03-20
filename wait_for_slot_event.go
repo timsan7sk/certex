@@ -6,10 +6,10 @@ package certex
 #include <unistd.h>
 #include <stdio.h>
 
-#include "./headers/cryptoki.h"
-#include "./headers/pkcs11def.h"
-#include "./headers/pkcs11t.h"
-#include "./headers/PKICertexHSM.h"
+#include "cryptoki.h"
+#include "pkcs11def.h"
+#include "pkcs11t.h"
+#include "PKICertexHSM.h"
 
 CK_RV wait_for_slot_event(CK_FUNCTION_LIST_PTR fl, CK_FLAGS flags, CK_ULONG_PTR slot){
 	return (*fl->C_WaitForSlotEvent)(flags, (CK_SLOT_ID_PTR) slot, NULL);

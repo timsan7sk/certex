@@ -6,10 +6,10 @@ package certex
 #include <unistd.h>
 #include <stdio.h>
 
-#include "./headers/cryptoki.h"
-#include "./headers/pkcs11def.h"
-#include "./headers/pkcs11t.h"
-#include "./headers/PKICertexHSM.h"
+#include "cryptoki.h"
+#include "pkcs11def.h"
+#include "pkcs11t.h"
+#include "PKICertexHSM.h"
 
 CK_RV set_pin(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, char *OldPin, CK_ULONG ulOldLen, char *NewPin, CK_ULONG ulNewLen) {
 	return (*fl->C_SetPIN)(hSession, (CK_UTF8CHAR_PTR) OldPin, ulOldLen, (CK_UTF8CHAR_PTR) NewPin, ulNewLen);

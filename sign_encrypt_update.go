@@ -6,10 +6,10 @@ package certex
 #include <unistd.h>
 #include <stdio.h>
 
-#include "./headers/cryptoki.h"
-#include "./headers/pkcs11def.h"
-#include "./headers/pkcs11t.h"
-#include "./headers/PKICertexHSM.h"
+#include "cryptoki.h"
+#include "pkcs11def.h"
+#include "pkcs11t.h"
+#include "PKICertexHSM.h"
 
 CK_RV sign_encrypt_update(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, CK_BYTE_PTR pEncryptedPart, CK_ULONG_PTR ulEncryptedPartLen) {
 	CK_RV rv =(*fl->C_SignEncryptUpdate)(hSession, pPart, ulPartLen, NULL, ulEncryptedPartLen);

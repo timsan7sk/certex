@@ -6,10 +6,10 @@ package certex
 #include <unistd.h>
 #include <stdio.h>
 
-#include "./headers/cryptoki.h"
-#include "./headers/pkcs11def.h"
-#include "./headers/pkcs11t.h"
-#include "./headers/PKICertexHSM.h"
+#include "cryptoki.h"
+#include "pkcs11def.h"
+#include "pkcs11t.h"
+#include "PKICertexHSM.h"
 
 CK_RV get_slot_info(CK_FUNCTION_LIST_PTR fl, CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo) {
 	return (*fl->C_GetSlotInfo)(slotID, pInfo);
