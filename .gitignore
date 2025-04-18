@@ -24,3 +24,6 @@ go.work.sum
 # VS Code
 .vscode
 *.conf
+
+#
+_obj
