@@ -1,6 +1,8 @@
 |[![Scheme](./images/nca_icon.png)](https://pki.gov.kz/)| **Go wrapper for the [Gamma Technologies](https://gamma.kz/) Cryptoki(PKCS#11) library of Certex HSM** |
 |:---------------------------------------------------:|:-------------------------------------------------------------------------------------------------------|
 
+[![reportcard-img]][reportcard-url]
+
 #### Functionality ####
 Certex HSM provides the following cryptographic functions:
 - Generation of cryptographic keys, encryption and decryption using the  algorithm:
@@ -128,3 +130,7 @@ func init() {
 | C_GetFunctionStatus:   | + | -  | -    | Legacy function; it obtains an updated status of a function running in parallel with an application.|
 | C_CancelFunction:      | + | -  | -    | Legacy function; it cancels a function running in parallel.|
 | C_WaitForSlotEvent:    | + | +  | -    | Waits for a slot event (token insertion, removal, etc.) to occur.|
+
+
+[reportcard-img]: https://goreportcard.com/badge/github.com/timsan7sk/certex
+[reportcard-url]: https://goreportcard.com/report/github.com/timsan7sk/certex
