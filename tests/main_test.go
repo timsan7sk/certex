@@ -63,6 +63,7 @@ var (
 		certex.NewAttribute(certex.CKA_DECRYPT, true),
 		certex.NewAttribute(certex.CKA_DERIVE, true),
 		certex.NewAttribute(certex.CKA_SIGN_RECOVER, true),
+		// certex.NewAttribute(certex.CKA_END_DATE, time.Now().Local()),
 		// certex.NewAttribute(certex.CKA_GOSTR3410_PARAMS, []byte{0x06, 0x07, 0x2a, 0x85, 0x03, 0x02, 0x02, 0x23, 0x00}),
 		// certex.NewAttribute(certex.CKA_GOSTR3411_PARAMS, []byte{0x06, 0x08, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x02}),
 		// certex.NewAttribute(certex.CKA_VALUE, []byte{}),
@@ -122,10 +123,25 @@ func TestMain(m *testing.M) {
 		fmt.Println("Generate Key error: ", err)
 		os.Exit(1)
 	}
-	m.Run()
-	_ = testPubKey.DestroyObject()
-	_ = testPrivKey.DestroyObject()
-	_ = testSecKey.DestroyObject()
+	// attr, err := testPrivKey.Attribute(certex.CKA_CERTEX_KEY_GENERATION_DATE)
+	// if err != nil {
+	// 	fmt.Println("Attribute: ", err)
+	// }
+	// fmt.Println(attr)
+	x := m.Run()
+	err = testPubKey.DestroyObject()
+	if err != nil {
+		fmt.Println("DestroyObject: ", err)
+	}
+	err = testPrivKey.DestroyObject()
+	if err != nil {
+		fmt.Println("DestroyObject: ", err)
+	}
+	err = testSecKey.DestroyObject()
+	if err != nil {
+		fmt.Println("DestroyObject: ", err)
+	}
 	slot.Close()
 	mod.Close()
+	os.Exit(x)
 }
