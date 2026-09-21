@@ -14,6 +14,26 @@ package certex
 
 */
 import "C"
+import "fmt"
+
+// PKCS11Error инкапсулирует нативный код возврата Cryptoki.
+type PKCS11Error C.CK_RV
+
+// Error реализует интерфейс error для кодов возврата PKCS#11.
+func (e PKCS11Error) Error() string {
+	if msg, ok := returnValues[C.CK_ULONG(e)]; ok {
+		return fmt.Sprintf("PKCS#11 fault 0x%08x: %s", uint32(e), msg)
+	}
+	return fmt.Errorf("PKCS#11 unknown fault 0x%08x", uint32(e)).Error()
+}
+
+// ToError конвертация результата CGO в нативную ошибку Go.
+func ToError(rv C.CK_RV) error {
+	if rv == C.CKR_OK {
+		return nil
+	}
+	return PKCS11Error(rv)
+}
 
 var returnValues = map[C.CK_ULONG]string{
 	// awk '/#define CKR_/{ print $3":\""$2"\"," }' pkcs11t.h
