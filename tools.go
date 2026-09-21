@@ -74,29 +74,21 @@ func ckCString(s string) (cstring *C.CK_UTF8CHAR, free func()) {
 	return b, func() { C.free(unsafe.Pointer(b)) }
 }
 
+// ckGoString converts a cryptokit string to a Go string without allocations.
 func ckGoString(s *C.CK_UTF8CHAR, n C.CK_ULONG) string {
-	var sb strings.Builder
-	sli := unsafe.Slice(s, n)
-	for _, b := range sli {
-		sb.WriteByte(byte(b))
+	if n == 0 || s == nil {
+		return ""
 	}
-	return sb.String()
+	str := unsafe.String((*byte)(unsafe.Pointer(s)), int(n))
+	return strings.TrimRight(str, " \x00") // Очищаем от паддинга
 }
 
 func toString(b []C.uchar) string {
-	lastIndex := len(b)
-	for i := len(b); i > 0; i-- {
-		if b[i-1] != C.uchar(' ') {
-			break
-		}
-		lastIndex = i - 1
+	if len(b) == 0 {
+		return ""
 	}
-
-	var sb strings.Builder
-	for _, c := range b[:lastIndex] {
-		sb.WriteByte(byte(c))
-	}
-	return sb.String()
+	str := unsafe.String((*byte)(unsafe.Pointer(&b[0])), len(b))
+	return strings.TrimRight(str, " \x00")
 }
 
 // ckStringPadded copies a string into b, padded with ' '. If the string is larger
