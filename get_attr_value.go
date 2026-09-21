@@ -12,10 +12,20 @@ package certex
 #include "PKICertexHSM.h"
 
 CK_RV get_attribute_value(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount) {
+ CK_RV e = (*fl->C_GetAttributeValue)(hSession, hObject, pTemplate, ulCount);
+ if (e != CKR_OK) {
+ 	CK_ULONG i;
+	for (i = 0; i < ulCount; i++) {
+		if ((CK_LONG) pTemplate[i].ulValueLen == -1) {
+			// either access denied or no such object
+			continue;
+		}
+		pTemplate[i].pValue = calloc(pTemplate[i].ulValueLen, sizeof(CK_BYTE));
+	}
+ }
 	return (*fl->C_GetAttributeValue)(hSession, hObject, pTemplate, ulCount);
 }
-static inline CK_VOID_PTR getAttrPval(CK_ATTRIBUTE_PTR a)
-{
+static inline CK_VOID_PTR getAttrPval(CK_ATTRIBUTE_PTR a) {
 	return a->pValue;
 }
 */
@@ -33,9 +43,10 @@ func (o Object) getAttributeValue(attrs []C.CK_ATTRIBUTE) error {
 }
 func (o Object) GetAttributeValue(attrs []*Attribute) ([]*Attribute, error) {
 	cAttrs := make([]C.CK_ATTRIBUTE, len(attrs))
-	for i := 0; i < len(attrs); i++ {
+	for i := range attrs {
 		cAttrs[i]._type = C.CK_ATTRIBUTE_TYPE(attrs[i].Type)
 	}
+	o.getAttributeValue(cAttrs)
 	if rv := C.get_attribute_value(o.fl, o.h, o.o, &cAttrs[0], C.CK_ULONG(len(attrs))); rv != C.CKR_OK {
 		return nil, fmt.Errorf("get_attribute_value: 0x%08x : %s", rv, returnValues[rv])
 	}
@@ -45,8 +56,11 @@ func (o Object) GetAttributeValue(attrs []*Attribute) ([]*Attribute, error) {
 		x.Type = uint(c._type)
 		if int(c.ulValueLen) != -1 {
 			buf := unsafe.Pointer(C.getAttrPval(&c))
-			x.Value = C.GoBytes(buf, C.int(c.ulValueLen))
-			C.free(buf)
+			if buf != nil {
+				x.Value = C.GoBytes(buf, C.int(c.ulValueLen))
+				x.Value = C.GoBytes(unsafe.Pointer(c.pValue), C.int(c.ulValueLen))
+				C.free(buf)
+			}
 		}
 		pAttrs[i] = x
 	}
