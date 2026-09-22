@@ -171,12 +171,15 @@ type SlotOptions struct {
 	Label    string
 }
 
-// Holds information about the slot and underlying token.
+// SlotInfo provides information about a particular slot in the system.
+// Corresponds to C.CK_SLOT_INFO
 type SlotInfo struct {
-	Label       string
-	Model       string
-	Serial      string
-	Description string
+	Description     string
+	ManufacturerID  string
+	Flags           uint
+	HardwareVersion Version
+	FirmwareVersion Version
+	TokenInfo       *TokenInfo
 }
 
 // Holds configuration options for the slot session.
@@ -190,7 +193,8 @@ type Options struct {
 	ReadWrite bool
 }
 
-// Obtains information about a particular token
+// TokenInfo provides information about a token.
+// Corresponds to C.CK_TOKEN_INFO
 type TokenInfo struct {
 	Label              string
 	ManufacturerID     string

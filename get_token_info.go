@@ -18,15 +18,32 @@ CK_RV get_token_info(CK_FUNCTION_LIST_PTR fl, CK_SLOT_ID slotID, CK_TOKEN_INFO_P
 import "C"
 import (
 	"fmt"
-	"unsafe"
 )
 
-func (s *Slot) GetTokenInfo() (TokenInfo, error) {
-	var cTokenInfo C.CK_TOKEN_INFO
-	if rv := C.get_token_info(s.fl, C.CK_SLOT_ID(s.id), &cTokenInfo); rv != C.CKR_OK {
-		return TokenInfo{}, fmt.Errorf("GetTokenInfo: 0x%08x : %s", rv, returnValues[rv])
+// GetTokenInfo obtains information about a particular token in the system
+// without requiring an active session.
+func (m *Cryptoki) GetTokenInfo(slotID uint32) (*TokenInfo, error) {
+	cTokenInfo, err := internalGetTokenInfo(m.fl, slotID)
+	if err != nil {
+		return nil, err
 	}
-	r := TokenInfo{
+	info := parseTokenInfo(cTokenInfo)
+	return &info, nil
+}
+
+// internalGetTokenInfo safely wraps the underlying C_GetTokenInfo CGO call
+// using the provided cryptographic function list pointer.
+func internalGetTokenInfo(fl C.CK_FUNCTION_LIST_PTR, slotID uint32) (C.CK_TOKEN_INFO, error) {
+	var cTokenInfo C.CK_TOKEN_INFO
+	if rv := C.get_token_info(fl, C.CK_SLOT_ID(slotID), &cTokenInfo); rv != C.CKR_OK {
+		return C.CK_TOKEN_INFO{}, fmt.Errorf("GetTokenInfo: 0x%08x : %s", rv, returnValues[rv])
+	}
+	return cTokenInfo, nil
+}
+
+// parseTokenInfo maps the native C.CK_TOKEN_INFO structure to the Go TokenInfo representation.
+func parseTokenInfo(cTokenInfo C.CK_TOKEN_INFO) TokenInfo {
+	return TokenInfo{
 		Label:              toString(cTokenInfo.label[:]),
 		ManufacturerID:     toString(cTokenInfo.manufacturerID[:]),
 		Model:              toString(cTokenInfo.model[:]),
@@ -39,7 +56,7 @@ func (s *Slot) GetTokenInfo() (TokenInfo, error) {
 		MaxPinLen:          uint(cTokenInfo.ulMaxPinLen),
 		MinPinLen:          uint(cTokenInfo.ulMinPinLen),
 		TotalPublicMemory:  uint(cTokenInfo.ulTotalPublicMemory),
-		FreePublicMemory:   uint(cTokenInfo.ulFreePrivateMemory),
+		FreePublicMemory:   uint(cTokenInfo.ulFreePublicMemory),
 		TotalPrivateMemory: uint(cTokenInfo.ulTotalPrivateMemory),
 		FreePrivateMemory:  uint(cTokenInfo.ulFreePrivateMemory),
 		HardwareVersion: Version{
@@ -52,14 +69,4 @@ func (s *Slot) GetTokenInfo() (TokenInfo, error) {
 		},
 		TimeUTC: toString(cTokenInfo.utcTime[:]),
 	}
-	C.free(unsafe.Pointer(&cTokenInfo))
-	return r, nil
-}
-
-func (s *Slot) getTokenInfo() (C.CK_TOKEN_INFO, error) {
-	var cTokenInfo C.CK_TOKEN_INFO
-	if rv := C.get_token_info(s.fl, C.CK_SLOT_ID(s.id), &cTokenInfo); rv != C.CKR_OK {
-		return C.CK_TOKEN_INFO{}, fmt.Errorf("GetTokenInfo: 0x%08x : %s", rv, returnValues[rv])
-	}
-	return cTokenInfo, nil
 }
