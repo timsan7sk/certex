@@ -44,7 +44,7 @@ func (s *Slot) FindObjects(opts Filter) (objs []Object, err error) {
 	if opts.Class != 0 {
 		c, ok := Class(opts.Class).ckType()
 		if ok {
-			objClass := C.CK_OBJECT_CLASS_PTR(C.malloc(C.sizeof_CK_OBJECT_CLASS))
+			objClass := C.CK_OBJECT_CLASS_PTR(C.calloc(1, C.sizeof_CK_OBJECT_CLASS))
 			defer C.free(unsafe.Pointer(objClass))
 
 			*objClass = c
