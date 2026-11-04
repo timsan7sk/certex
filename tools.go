@@ -66,7 +66,7 @@ func ckString(s string) []C.CK_UTF8CHAR {
 //
 // This method also returns a function to free the allocated C memory.
 func ckCString(s string) (cstring *C.CK_UTF8CHAR, free func()) {
-	b := (*C.CK_UTF8CHAR)(C.malloc(C.sizeof_CK_UTF8CHAR * C.ulong(len(s))))
+	b := (*C.CK_UTF8CHAR)(C.calloc(1, C.sizeof_CK_UTF8CHAR*C.ulong(len(s))))
 	bs := unsafe.Slice(b, len(s))
 	for i, c := range []byte(s) {
 		bs[i] = C.CK_UTF8CHAR(c)
@@ -76,18 +76,21 @@ func ckCString(s string) (cstring *C.CK_UTF8CHAR, free func()) {
 
 // ckGoString converts a cryptokit string to a Go string without allocations.
 func ckGoString(s *C.CK_UTF8CHAR, n C.CK_ULONG) string {
-	if n == 0 || s == nil {
+	if n == 0 || s == nil || int64(n) < 0 {
 		return ""
 	}
-	str := unsafe.String((*byte)(unsafe.Pointer(s)), int(n))
-	return strings.TrimRight(str, " \x00") // Очищаем от паддинга
+	bytes := unsafe.Slice((*byte)(unsafe.Pointer(s)), int(n))
+	str := string(bytes)
+	return strings.TrimRight(str, " \x00")
 }
 
+// toString безопасно копирует массив C.uchar в строку Go.
 func toString(b []C.uchar) string {
 	if len(b) == 0 {
 		return ""
 	}
-	str := unsafe.String((*byte)(unsafe.Pointer(&b[0])), len(b))
+	bytes := unsafe.Slice((*byte)(unsafe.Pointer(&b[0])), len(b))
+	str := string(bytes)
 	return strings.TrimRight(str, " \x00")
 }
 

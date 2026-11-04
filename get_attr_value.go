@@ -12,17 +12,30 @@ package certex
 #include "PKICertexHSM.h"
 
 CK_RV get_attribute_value(CK_FUNCTION_LIST_PTR fl, CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount) {
- CK_RV e = (*fl->C_GetAttributeValue)(hSession, hObject, pTemplate, ulCount);
- if (e != CKR_OK) {
- 	CK_ULONG i;
+	CK_ULONG i;
+	int needs_alloc = 0;
+
 	for (i = 0; i < ulCount; i++) {
-		if ((CK_LONG) pTemplate[i].ulValueLen == -1) {
-			// either access denied or no such object
+		if (pTemplate[i].pValue == NULL_PTR) {
+			needs_alloc = 1;
+			break;
+		}
+	}
+	if (!needs_alloc) {
+		return (*fl->C_GetAttributeValue)(hSession, hObject, pTemplate, ulCount);
+	}
+	CK_RV e = (*fl->C_GetAttributeValue)(hSession, hObject, pTemplate, ulCount);
+	if (e != CKR_OK && e != CKR_BUFFER_TOO_SMALL) {
+		return e;
+	}
+	for (i = 0; i < ulCount; i++) {
+		if ((CK_LONG)pTemplate[i].ulValueLen <= 0) {
 			continue;
 		}
-		pTemplate[i].pValue = calloc(pTemplate[i].ulValueLen, sizeof(CK_BYTE));
+		if (pTemplate[i].pValue == NULL_PTR) {
+			pTemplate[i].pValue = calloc(pTemplate[i].ulValueLen, sizeof(CK_BYTE));
+		}
 	}
- }
 	return (*fl->C_GetAttributeValue)(hSession, hObject, pTemplate, ulCount);
 }
 static inline CK_VOID_PTR getAttrPval(CK_ATTRIBUTE_PTR a) {
@@ -41,24 +54,25 @@ func (o Object) getAttributeValue(attrs []C.CK_ATTRIBUTE) error {
 	}
 	return nil
 }
+
 func (o Object) GetAttributeValue(attrs []*Attribute) ([]*Attribute, error) {
 	cAttrs := make([]C.CK_ATTRIBUTE, len(attrs))
 	for i := range attrs {
 		cAttrs[i]._type = C.CK_ATTRIBUTE_TYPE(attrs[i].Type)
 	}
-	o.getAttributeValue(cAttrs)
-	if rv := C.get_attribute_value(o.fl, o.h, o.o, &cAttrs[0], C.CK_ULONG(len(attrs))); rv != C.CKR_OK {
-		return nil, fmt.Errorf("get_attribute_value: 0x%08x : %s", rv, returnValues[rv])
+
+	if err := o.getAttributeValue(cAttrs); err != nil {
+		return nil, err
 	}
+
 	pAttrs := make([]*Attribute, len(attrs))
 	for i, c := range cAttrs {
 		x := new(Attribute)
 		x.Type = uint(c._type)
-		if int(c.ulValueLen) != -1 {
+		if int64(c.ulValueLen) > 0 {
 			buf := unsafe.Pointer(C.getAttrPval(&c))
 			if buf != nil {
 				x.Value = C.GoBytes(buf, C.int(c.ulValueLen))
-				x.Value = C.GoBytes(unsafe.Pointer(c.pValue), C.int(c.ulValueLen))
 				C.free(buf)
 			}
 		}
@@ -67,8 +81,9 @@ func (o Object) GetAttributeValue(attrs []*Attribute) ([]*Attribute, error) {
 
 	return pAttrs, nil
 }
+
 func (s *p) newObject(oh C.CK_OBJECT_HANDLE) (Object, error) {
-	objClass := C.CK_OBJECT_CLASS_PTR(C.malloc(C.sizeof_CK_OBJECT_CLASS))
+	objClass := C.CK_OBJECT_CLASS_PTR(C.calloc(1, C.sizeof_CK_OBJECT_CLASS))
 	defer C.free(unsafe.Pointer(objClass))
 
 	a := []C.CK_ATTRIBUTE{
@@ -78,5 +93,6 @@ func (s *p) newObject(oh C.CK_OBJECT_HANDLE) (Object, error) {
 	if rv := C.get_attribute_value(s.fl, s.h, oh, &a[0], C.CK_ULONG(len(a))); rv != C.CKR_OK {
 		return Object{}, fmt.Errorf("newObject: 0x%08x : %s", rv, returnValues[rv])
 	}
-	return Object{p{fl: s.fl, h: s.h}, oh, *objClass}, nil
+	cleanClass := *objClass & 0xFFFFFFFF
+	return Object{p{fl: s.fl, h: s.h}, oh, cleanClass}, nil
 }
